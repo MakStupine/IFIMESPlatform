@@ -1,0 +1,239 @@
+{
+  "nav_home": "Home",
+  "nav_features": "Latest News",
+  "nav_services": "Services",
+  "nav_about": "About",
+  "nav_testimonials": "Testimonials",
+  "nav_contact": "Contact",
+  "nav_getintouch": "Get in Touch",
+  "nav_events": "Events",
+  "select_language": "Select Language",
+
+  "hero": {
+    "fullName": "International Institute for Middle East and Balkan Studies",
+    "established": "Est. {{year}} | UN ECOSOC Accredited",
+    "tagline": "Shaping global dialogue through research and diplomacy.",
+    "description": "IFIMES provides unbiased analysis and strategic insights on pressing international affairs.",
+    "servicesBtn": "Our Services",
+    "contactBtn": "Contact Us"
+  },
+
+  "features": {
+    "heading": "Latest news",
+    "subheading": "We deliver exceptional research and analysis services with a focus on quality and expertise"
+  },
+
+  "services": {
+    "label": "Our Expertise",
+    "heading": "Our Services",
+    "subheading": "Comprehensive research and advisory services tailored to address the complex dynamics of the Middle East and Balkan regions"
+  },
+
+  "about": {
+    "label": "Our Story",
+    "heading": "About IFIMES",
+    "founded": "Founded in {{year}}",
+    "timeline": {
+      "foundation": "Established to address the need for independent analysis of complex geopolitical issues",
+      "recognition": "Gained special consultative status with the UN Economic and Social Council",
+      "today": "Leading provider of strategic analysis for international organizations and governments"
+    },
+    "leadershipTitle": "Leadership in Middle East and Balkan Studies",
+    "leadershipText1": "IFIMES is a leading international institute dedicated to research and analysis of political, economic, and security issues in the Middle East and Balkan regions.",
+    "leadershipText2": "Founded with a vision to bridge understanding and foster cooperation, our team of experts provides valuable insights and actionable recommendations to governments, international organizations, and private entities.",
+    "missionTitle": "Our Mission",
+    "missionText": "To provide independent, balanced and objective analysis of geopolitical, economic and security issues in the Middle East and Balkan regions to foster greater understanding and cooperation.",
+    "whyTitle": "Why Choose IFIMES",
+    "contactBtn": "Contact Our Team",
+    "features": [
+      "Established in 1995 with over 25 years of regional expertise",
+      "Special consultative status with the UN Economic and Social Council",
+      "Published over 500 analytical studies and research papers",
+      "Advised governments and international organizations on policy development",
+      "International team of researchers and subject matter experts"
+    ]
+  },
+
+  "featuresSection": {
+    "heading": "Latest news",
+    "subheading": "We deliver exceptional research and analysis services with a focus on quality and expertise",
+    "stats": {
+      "subscribers": "Over 400,000 subscribers worldwide",
+      "articles": "500+ published research articles"
+    },
+    "items": [
+      {
+        "title": "International Recognition",
+        "description": "Accredited by leading global organizations including the United Nations ECOSOC and OSCE."
+      },
+      {
+        "title": "Research Excellence",
+        "description": "Producing authoritative analysis and strategic forecasting based on rigorous methodology and expert insights."
+      },
+      {
+        "title": "Global Network",
+        "description": "Collaborating with a worldwide network of experts, institutions, and decision-makers for comprehensive perspectives."
+      },
+      {
+        "title": "Impact-Driven",
+        "description": "Creating actionable intelligence that shapes policy decisions and advances positive regional developments."
+      }
+    ]
+  },
+
+  "servicesSection": {
+    "learnMore": "Learn more",
+    "label": "Our Expertise",
+    "heading": "Our Services",
+    "subheading": "Comprehensive research and advisory services tailored to address the complex dynamics of the Middle East and Balkan regions",
+    "items": [
+      {
+        "title": "Strategic Analysis",
+        "description": "In-depth assessment of geopolitical trends, political developments, and security dynamics in the Middle East and Balkan regions."
+      },
+      {
+        "title": "Research Publications",
+        "description": "Regular production of comprehensive research papers, policy briefs, and special reports on critical regional issues."
+      },
+      {
+        "title": "Institution Building",
+        "description": "Supporting the development of democratic institutions and governance frameworks in transitional societies."
+      },
+      {
+        "title": "International Dialogue",
+        "description": "Facilitating constructive dialogue between stakeholders to address complex regional challenges and promote cooperation."
+      },
+      {
+        "title": "Conferences & Events",
+        "description": "Organizing high-level conferences, seminars, and workshops bringing together experts and decision-makers on critical topics."
+      },
+      {
+        "title": "Educational Programs",
+        "description": "Specialized training and educational initiatives for diplomats, policymakers, and professionals on regional affairs."
+      }
+    ]
+  },
+
+  "testimonials": {
+    "label": "Testimonials",
+    "heading": "What Our Partners Say",
+    "subheading": "Our research and analysis is trusted by leading international organizations and governments around the world",
+    "highlight": {
+      "quote": "IFIMES provides invaluable strategic insights that help shape our understanding of complex regional dynamics. Their analysis consistently demonstrates exceptional depth and foresight.",
+      "organization": "European Union External Action Service",
+      "department": "Strategic Planning Department"
+    }
+  },
+
+  "testimonialsSection": {
+    "items": [
+      {
+        "text": "IFIMES consistently delivers exceptional analysis that helps inform our policy approaches to the Middle East region. Their insights have been invaluable for our strategic planning process.",
+        "organization": "European External Action Service",
+        "department": "Policy Planning Division"
+      },
+      {
+        "text": "The depth and quality of research produced by IFIMES has significantly enhanced our understanding of the complex dynamics in the Balkans. Their work stands out for its objectivity and thoroughness.",
+        "organization": "United Nations",
+        "department": "Department of Political and Peacebuilding Affairs"
+      },
+      {
+        "text": "As a long-term partner of IFIMES, we've come to rely on their expertise for navigating the intricate political landscape of the regions they cover. Their analysis is both timely and forward-looking.",
+        "organization": "Organization for Security and Co-operation in Europe",
+        "department": "Conflict Prevention Centre"
+      },
+      {
+        "text": "IFIMES has been instrumental in providing context and clarity on evolving situations in regions of strategic importance. Their analytical framework helps cut through complexity to identify key trends.",
+        "organization": "Atlantic Council",
+        "department": "Middle East Programs"
+      }
+    ]
+  },
+
+  "contact": {
+    "heading": "Contact Us",
+    "subheading": "Get in touch to learn more about our services and how we can support your organization",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "Enter your email address",
+    "submit": "Subscribe",
+    "submitting": "Submitting...",
+    "success": "Success!",
+    "error": "Subscription failed",
+    "alreadySubscribed": "This email address is already subscribed. You will receive updates.",
+    "validation": {
+      "email": "Please enter a valid email address.",
+      "language": "Please select a language.",
+      "name": "Please enter your name.",
+      "surname": "Please enter your surname."
+    },
+    "languageLabel": "Choose a language:",
+    "languageOptions": {
+      "en": "English",
+      "sl": "Slovenian",
+      "bs": "Bosnian"
+    },
+    "nameLabel": "First Name",
+    "namePlaceholder": "Enter your first name",
+    "surnameLabel": "Last Name",
+    "surnamePlaceholder": "Enter your last name"
+  },
+
+  "footer": {
+    "newsletter": {
+      "placeholder": "Enter your email",
+      "submit": "Subscribe",
+      "submitting": "Sending...",
+      "successTitle": "Success!",
+      "successMessage": "You've been subscribed to our newsletter.",
+      "errorTitle": "Error",
+      "errorMessage": "Failed to subscribe. Please try again.",
+      "validation": {
+        "email": "Please enter a valid email address."
+      }
+    },
+    "rights": "All rights reserved."
+  },
+
+  "research": {
+    "title": "Research",
+    "readMore": "Read more",
+    "page": "Page",
+    "of": "of",
+    "prev": "Previous",
+    "next": "Next",
+    "noResults": "No articles found."
+  },
+
+  "press": {
+    "title": "Press",
+    "readMore": "Read more",
+    "page": "Page",
+    "of": "of",
+    "prev": "Previous",
+    "next": "Next",
+    "noResults": "No articles found."
+  },
+
+  "events": {
+    "futureBtn": "Future events",
+    "pastBtn": "Past events",
+    "none": "No events announced."
+  },
+
+  "media": {
+    "socialTitle": "Društvene mreže",
+    "socialDesc": "Pratite nas na društvenim mrežama.",
+    "livestreamTitle": "Gledajte naš prijenos uživo"
+  },
+
+  "article": {
+    "loading": "Loading article...",
+    "totalShares": "Shares",
+    "latestResearch": "Latest Research",
+    "latestPress": "Latest Press"
+  },
+
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}

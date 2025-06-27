@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    overflow-y: scroll;
+  }
+
+  body {
+    overflow-x: hidden;
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+
+  /* ✅ Add this to compensate for hidden scrollbar from Radix */
+  body[style*="overflow: hidden"] {
+    padding-right: 15px !important;
+  }
+
+  * {
+    @apply border-border;
+  }
+}

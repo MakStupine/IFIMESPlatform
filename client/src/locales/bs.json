@@ -1,0 +1,223 @@
+{
+  "nav_home": "Početna",
+  "nav_features": "Najnovije vijesti",
+  "nav_services": "Usluge",
+  "nav_about": "O nama",
+  "nav_testimonials": "Iskustva korisnika",
+  "nav_contact": "Kontakt",
+  "nav_getintouch": "Kontaktiraj nas",
+  "nav_events": "Događaji",
+  "select_language": "Odaberi jezik",
+
+  "hero": {
+    "fullName": "Međunarodni institut za bliskoistočne i balkanske studije",
+    "established": "Osnovano {{year}} | ECOSOC UN akreditacija",
+    "tagline": "Oblikujemo globalni dijalog kroz istraživanje i diplomatiju.",
+    "description": "IFIMES pruža nepristranu analizu i strateške uvide o ključnim međunarodnim pitanjima.",
+    "servicesBtn": "Naše usluge",
+    "contactBtn": "Kontaktirajte nas"
+  },
+
+  "features": {
+    "heading": "Najnovije vijesti",
+    "subheading": "Pružamo izvanredne istraživačke i analitičke usluge s naglaskom na kvalitet i stručnost"
+  },
+
+  "services": {
+    "label": "Naša stručnost",
+    "heading": "Naše usluge",
+    "subheading": "Sveobuhvatne istraživačke i savjetodavne usluge prilagođene složenoj dinamici Bliskog istoka i balkanske regije"
+  },
+
+  "about": {
+    "label": "Naša priča",
+    "heading": "O IFIMES-u",
+    "founded": "Osnovano {{year}}",
+    "timeline": {
+      "foundation": "Osnovan radi pružanja nezavisne analize složenih geopolitičkih pitanja",
+      "recognition": "Stekao specijalni konsultativni status pri Ekonomskom i socijalnom savjetu UN-a",
+      "today": "Vodeći pružalac strateške analize za međunarodne organizacije i vlade"
+    },
+    "leadershipTitle": "Liderstvo u bliskoistočnim i balkanskim studijama",
+    "leadershipText1": "IFIMES je vodeći međunarodni institut posvećen istraživanju i analizi političkih, ekonomskih i sigurnosnih pitanja na Bliskom istoku i Balkanu.",
+    "leadershipText2": "Osnovan sa vizijom da povezuje razumijevanje i podstiče saradnju, naš tim stručnjaka pruža vrijedne uvide i konkretne preporuke vladama, međunarodnim organizacijama i privatnim subjektima.",
+    "missionTitle": "Naša misija",
+    "missionText": "Pružiti nezavisnu, uravnoteženu i objektivnu analizu geopolitičkih, ekonomskih i sigurnosnih pitanja na Bliskom istoku i Balkanu kako bi se podstaklo veće razumijevanje i saradnja.",
+    "whyTitle": "Zašto izabrati IFIMES",
+    "contactBtn": "Kontaktirajte naš tim",
+    "features": [
+      "Osnovan 1995. godine sa preko 25 godina regionalne stručnosti",
+      "Specijalni konsultativni status pri Ekonomskom i socijalnom savjetu UN-a",
+      "Objavljeno više od 500 analitičkih studija i istraživačkih radova",
+      "Savetovao vlade i međunarodne organizacije o razvoju politika",
+      "Međunarodni tim istraživača i stručnjaka iz različitih oblasti"
+    ]
+  },
+
+  "featuresSection": {
+    "heading": "Najnovije vijesti",
+    "subheading": "Pružamo vrhunska istraživanja i analize sa fokusom na kvalitet i stručnost",
+    "stats": {
+      "subscribers": "Preko 400.000 pretplatnika širom svijeta",
+      "articles": "500+ objavljenih istraživačkih članaka"
+    },
+    "items": [
+      {
+        "title": "Međunarodno priznanje",
+        "description": "Akreditovani od vodećih svjetskih organizacija, uključujući UN ECOSOC i OSCE."
+      },
+      {
+        "title": "Istraživačka izvrsnost",
+        "description": "Pripremamo autoritativne analize i strateške prognoze zasnovane na rigoroznoj metodologiji i stručnoj ekspertizi."
+      },
+      {
+        "title": "Globalna mreža",
+        "description": "Saradnja sa globalnom mrežom eksperata, institucija i donosilaca odluka za sveobuhvatan uvid."
+      },
+      {
+        "title": "Usmjereni na uticaj",
+        "description": "Stvaranje korisnih informacija koje oblikuju politike i podstiču pozitivne regionalne promjene."
+      }
+    ]
+  },
+
+  "servicesSection": {
+    "learnMore": "Saznaj više",
+    "label": "Naša stručnost",
+    "heading": "Naše usluge",
+    "subheading": "Sveobuhvatna istraživanja i savjetodavne usluge prilagođene složenim izazovima Bliskog istoka i Balkana",
+    "items": [
+      {
+        "title": "Strateška analiza",
+        "description": "Detaljna procjena geopolitičkih trendova, političkih dešavanja i sigurnosne dinamike u regiji Bliskog istoka i Balkana."
+      },
+      {
+        "title": "Istraživačke publikacije",
+        "description": "Redovno objavljivanje istraživačkih radova, političkih analiza i specijalnih izvještaja o ključnim regionalnim pitanjima."
+      },
+      {
+        "title": "Izgradnja institucija",
+        "description": "Podrška razvoju demokratskih institucija i okvira upravljanja u tranzicijskim društvima."
+      },
+      {
+        "title": "Međunarodni dijalog",
+        "description": "Omogućavanje konstruktivnog dijaloga među akterima radi rješavanja složenih regionalnih izazova i promicanja saradnje."
+      },
+      {
+        "title": "Konferencije i događaji",
+        "description": "Organizacija konferencija, seminara i radionica visokog nivoa koje okupljaju stručnjake i donosioce odluka."
+      },
+      {
+        "title": "Obrazovni programi",
+        "description": "Specijalizirane obuke i edukativne inicijative za diplomate, kreatore politika i profesionalce o regionalnim pitanjima."
+      }
+    ]
+  },
+
+  "testimonials": {
+    "label": "Svjedočanstva",
+    "heading": "Šta naši partneri kažu",
+    "subheading": "Naša istraživanja i analize vjeruju vodeće međunarodne organizacije i vlade širom svijeta",
+    "highlight": {
+      "quote": "IFIMES pruža neprocjenjive strateške uvide koji pomažu oblikovati naše razumijevanje složenih regionalnih dinamika. Njihove analize dosljedno pokazuju izuzetnu dubinu i predviđanje.",
+      "organization": "Služba za vanjsko djelovanje Evropske unije",
+      "department": "Odjel za strateško planiranje"
+    }
+  },
+
+  "testimonialsSection": {
+    "items": [
+      {
+        "text": "IFIMES dosljedno pruža izuzetne analize koje pomažu u oblikovanju naših političkih pristupa prema Bliskom istoku. Njihovi uvidi su bili neprocjenjivi za naš proces strateškog planiranja.",
+        "organization": "Evropska služba za vanjsko djelovanje",
+        "department": "Odjel za planiranje politike"
+      },
+      {
+        "text": "Dubina i kvalitet istraživanja koje IFIMES proizvodi značajno su poboljšali naše razumijevanje složenih dinamika na Balkanu. Njihov rad se izdvaja po objektivnosti i temeljitosti.",
+        "organization": "Ujedinjene nacije",
+        "department": "Odjel za politička i mirovna pitanja"
+      },
+      {
+        "text": "Kao dugogodišnji partner IFIMES-a, oslanjamo se na njihovu stručnost u razumijevanju složenog političkog okruženja regije. Njihove analize su pravovremene i strateške.",
+        "organization": "Organizacija za sigurnost i saradnju u Evropi",
+        "department": "Centar za prevenciju sukoba"
+      },
+      {
+        "text": "IFIMES je bio ključan u pružanju konteksta i jasnoće u vezi sa situacijama u strateški važnim regijama. Njihov analitički okvir pomaže u prepoznavanju ključnih trendova.",
+        "organization": "Atlantski savjet",
+        "department": "Program za Bliski istok"
+      }
+    ]
+  },
+
+  "contact": {
+    "heading": "Kontaktirajte nas",
+    "subheading": "Kontaktirajte nas kako biste saznali više o našim uslugama i kako možemo podržati vašu organizaciju",
+    "emailLabel": "Email adresa",
+    "emailPlaceholder": "Unesite vašu email adresu",
+    "submit": "Pretplati se",
+    "submitting": "Slanje...",
+    "success": "Uspješno!",
+    "error": "Pretplata nije uspjela",
+    "alreadySubscribed": "Ova email adresa je već pretplaćena. Dobijat ćete obavijesti.",
+    "validation": {
+      "email": "Unesite važeću email adresu.",
+      "language": "Molimo odaberite jezik.",
+      "name": "Unesite vaše ime.",
+      "surname": "Unesite vaše prezime."
+    },
+    "languageLabel": "Izaberite jezik:",
+    "languageOptions": {
+      "en": "Engleski",
+      "sl": "Slovenački",
+      "bs": "Bosanski"
+    },
+    "nameLabel": "Ime",
+    "namePlaceholder": "Unesite vaše ime",
+    "surnameLabel": "Prezime",
+    "surnamePlaceholder": "Unesite vaše prezime"
+  },
+
+  "research": {
+    "title": "Istraživanja",
+    "readMore": "Pročitaj više",
+    "page": "Stranica",
+    "of": "od",
+    "prev": "Prethodna",
+    "next": "Sljedeća",
+    "noResults": "Nema pronađenih članaka."
+  },
+
+  "press": {
+    "title": "Press",
+    "readMore": "Pročitaj više",
+    "page": "Stranica",
+    "of": "od",
+    "prev": "Prethodna",
+    "next": "Sljedeća",
+    "noResults": "Nema pronađenih članaka."
+  },
+
+  "events": {
+    "futureBtn": "Budući događaji",
+    "pastBtn": "Prošli događaji",
+    "none": "Nema najavljenih događaja."
+  },
+
+  "media": {
+    "socialTitle": "Društvene mreže",
+    "socialDesc": "Pratite nas na društvenim mrežama.",
+    "livestreamTitle": "Gledajte naš prijenos uživo"
+  },
+
+  "article": {
+    "loading": "Učitavanje članka...",
+    "totalShares": "Dijeljenja",
+    "latestResearch": "Najnovija istraživanja",
+    "latestPress": "Najnovija saopštenja"
+  },
+
+  "footer": {
+    "rights": "Sva prava zadržana."
+  }
+}
