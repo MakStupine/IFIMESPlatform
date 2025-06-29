@@ -48,12 +48,16 @@ export default function ContactSection() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormValues) => {
-      const res = await apiRequest("POST", "/mailchimp/newsletter", {
-        email: data.email,
-        language: data.language,
-        name: data.name, // ✅ Add this
-        surname: data.surname, // ✅ Add this
-      });
+      const res = await apiRequest(
+        "POST",
+        `${import.meta.env.VITE_API_URL}/mailchimp/newsletter`,
+        {
+          email: data.email,
+          language: data.language,
+          name: data.name,
+          surname: data.surname,
+        }
+      );
 
       const result = await res.json();
       return { message: result.message };
