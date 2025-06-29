@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "type": "module",
   "license": "MIT",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "start": "NODE_ENV=production node dist/index.js",
-    "check": "tsc",
-    "db:push": "drizzle-kit push"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",          // ✅ Only frontend build
+  "build:all": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist", // ✅ Use this locally or for Heroku
+  "start": "NODE_ENV=production node dist/index.js",
+  "check": "tsc",
+  "db:push": "drizzle-kit push"
+},
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^3.10.0",
