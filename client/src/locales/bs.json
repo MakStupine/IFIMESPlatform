@@ -219,5 +219,32 @@
 
   "footer": {
     "rights": "Sva prava zadržana."
+  },
+
+  "sliders": {
+    "research": {
+      "title": "Istraživanja",
+      "heading": "U IFIMES-u istraživanje pokreće naše razumijevanje složenih globalnih dinamika",
+      "description": "Istraživanje je srž naše misije. Naš tim analitičara i istraživača temeljito proučava geopolitičke, ekonomske i sigurnosne prilike na Bliskom istoku, Balkanu i šire.",
+      "linkText": "Pročitaj istraživanja"
+    },
+    "press": {
+      "title": "Saopštenja za javnost",
+      "heading": "IFIMES izdaje saopštenje o diplomatskim naporima u vezi krize na Bliskom istoku",
+      "description": "U odgovoru na rastuće tenzije na Bliskom istoku, IFIMES je izdao saopštenje pozivajući na diplomatski dijalog i hitnu deeskalaciju. Izjava naglašava ulogu međunarodnih institucija i think tankova u sprječavanju sukoba.",
+      "linkText": "Pročitaj saopštenje"
+    },
+    "events": {
+      "title": "Događaji",
+      "heading": "IFIMES organizuje međunarodni forum o politici proširenja EU",
+      "description": "Forum koji će se održati 20. maja 2025. u Ljubljani okupiće vodeće stručnjake, donosioce odluka i diplomate kako bi razgovarali o budućnosti proširenja EU na Zapadni Balkan. IFIMES s ponosom nudi platformu za dijalog i razmjenu mišljenja.",
+      "linkText": "Pridruži se događaju"
+    },
+    "media": {
+      "title": "Mediji",
+      "heading": "IFIMES u fokusu globalnih medija zbog najnovijih geopolitičkih analiza",
+      "description": "Ugledni svjetski mediji referiraju se na IFIMES-ove analize koje se odnose na Istočnu Evropu i Bliski istok. Naši analitičari redovno gostuju u intervjuima, dajući uvid u ključna dešavanja.",
+      "linkText": "Pogledaj medijsku pokrivenost"
+    }
   }
 }

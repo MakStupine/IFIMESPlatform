@@ -235,5 +235,32 @@
 
   "footer": {
     "rights": "All rights reserved."
+  },
+
+  "sliders": {
+    "research": {
+      "title": "Researches",
+      "heading": "At IFIMES, research drives our understanding of complex global dynamics",
+      "description": "At IFIMES, research is at the core of our mission. Our team of analysts and scholars rigorously explores geopolitical, economic, and security developments across the Middle East, the Balkans, and beyond.",
+      "linkText": "Read Research"
+    },
+    "press": {
+      "title": "Press Releases",
+      "heading": "IFIMES issues statement on diplomatic efforts in Middle East crisis",
+      "description": "In response to ongoing tensions in the Middle East, IFIMES has issued a press release urging diplomatic dialogue and immediate de-escalation. The statement highlights the role of international institutions and think tanks in conflict prevention.",
+      "linkText": "Read Press"
+    },
+    "events": {
+      "title": "Events",
+      "heading": "IFIMES to host international forum on EU enlargement policy formation",
+      "description": "Scheduled for 20 May 2025 in Ljubljana, the forum will bring together leading scholars, policy makers, and diplomats to discuss the future of EU enlargement in the Western Balkans. IFIMES is honored to provide a platform for critical dialogue and exchange.",
+      "linkText": "Join Event"
+    },
+    "media": {
+      "title": "Media",
+      "heading": "IFIMES featured in global media outlets for latest geopolitical analysis",
+      "description": "Major international media have referenced IFIMES's latest geopolitical insights related to Eastern Europe and the Middle East. Our analysts continue to appear in interviews, shedding light on underreported yet critical developments shaping regional security.",
+      "linkText": "Explore Coverage"
+    }
   }
 }

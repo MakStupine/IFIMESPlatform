@@ -6,6 +6,7 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
+import { useTranslation } from "react-i18next";
 
 // Convert heading into a clean URL slug
 const toSlug = (text: string) =>
@@ -14,51 +15,10 @@ const toSlug = (text: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-const slides = [
-  {
-    title: "Researches",
-    heading:
-      "At IFIMES, research drives our understanding of complex global dynamics",
-    description:
-      "At IFIMES, research is at the core of our mission. Our team of analysts and scholars rigorously explores geopolitical, economic, and security developments across the Middle East, the Balkans, and beyond.",
-    image: images.research,
-    linkText: "Read Research",
-    linkTo: "/research",
-  },
-  {
-    title: "Press Releases",
-    heading:
-      "IFIMES issues statement on diplomatic efforts in Middle East crisis",
-    description:
-      "In response to ongoing tensions in the Middle East, IFIMES has issued a press release urging diplomatic dialogue and immediate de-escalation. The statement highlights the role of international institutions and think tanks in conflict prevention.",
-    image: images.press,
-    linkText: "Read Press",
-    linkTo: "/press",
-  },
-  {
-    title: "Events",
-    heading:
-      "IFIMES to host international forum on EU enlargement policy formation",
-    description:
-      "Scheduled for 20 May 2025 in Ljubljana, the forum will bring together leading scholars, policy makers, and diplomats to discuss the future of EU enlargement in the Western Balkans. IFIMES is honored to provide a platform for critical dialogue and exchange.",
-    image: images.events,
-    linkText: "Join Event",
-    linkTo: "/events",
-  },
-  {
-    title: "Media",
-    heading:
-      "IFIMES featured in global media outlets for latest geopolitical analysis",
-    description:
-      "Major international media have referenced IFIMES's latest geopolitical insights related to Eastern Europe and the Middle East. Our analysts continue to appear in interviews, shedding light on underreported yet critical developments shaping regional security.",
-    image: images.media,
-    linkText: "Explore Coverage",
-    linkTo: "/media",
-  },
-];
-
 export default function SlidersSection() {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
+
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: true,
     slides: { perView: 1, spacing: 20 },
@@ -73,6 +33,41 @@ export default function SlidersSection() {
     }, 6000);
     return () => clearInterval(timer);
   }, [instanceRef]);
+
+  const slides = [
+    {
+      title: t("sliders.research.title"),
+      heading: t("sliders.research.heading"),
+      description: t("sliders.research.description"),
+      linkText: t("sliders.research.linkText"),
+      image: images.research,
+      linkTo: "/research",
+    },
+    {
+      title: t("sliders.press.title"),
+      heading: t("sliders.press.heading"),
+      description: t("sliders.press.description"),
+      linkText: t("sliders.press.linkText"),
+      image: images.press,
+      linkTo: "/press",
+    },
+    {
+      title: t("sliders.events.title"),
+      heading: t("sliders.events.heading"),
+      description: t("sliders.events.description"),
+      linkText: t("sliders.events.linkText"),
+      image: images.events,
+      linkTo: "/events",
+    },
+    {
+      title: t("sliders.media.title"),
+      heading: t("sliders.media.heading"),
+      description: t("sliders.media.description"),
+      linkText: t("sliders.media.linkText"),
+      image: images.media,
+      linkTo: "/media",
+    },
+  ];
 
   return (
     <section className="py-16 bg-gray-50 relative">
