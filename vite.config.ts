@@ -33,8 +33,13 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    port: 5050,
     hmr: {
       overlay: false,
+    },
+    proxy: {
+      "/mailchimp": "http://localhost:5200",
+      "/api": "http://localhost:5250",
     },
   },
 });

@@ -48,7 +48,7 @@ export default function ContactSection() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormValues) => {
-      const res = await apiRequest("POST", "/api/newsletter", {
+      const res = await apiRequest("POST", "/mailchimp/newsletter", {
         email: data.email,
         language: data.language,
         name: data.name, // ✅ Add this
@@ -65,14 +65,21 @@ export default function ContactSection() {
       });
       form.reset();
     },
-    onError: (error) => {
+    onError: async (error: any) => {
       let message = t("contact.error");
-      if (
-        error instanceof Error &&
-        error.message.includes("is already a list member")
-      ) {
-        message = t("contact.alreadySubscribed");
+
+      try {
+        const res = await error.response?.json?.();
+        if (res?.message) {
+          message = res.message;
+        }
+      } catch (_) {
+        // Fallback error message
+        if (error instanceof Error) {
+          message = error.message;
+        }
       }
+
       toast({
         title: "Error",
         description: message,
