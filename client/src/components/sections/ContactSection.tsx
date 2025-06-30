@@ -59,9 +59,15 @@ export default function ContactSection() {
         }
       );
 
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || "Subscription failed");
+      }
+
       const result = await res.json();
       return { message: result.message };
     },
+
     onSuccess: (response) => {
       toast({
         title: t("contact.success"),
@@ -69,19 +75,12 @@ export default function ContactSection() {
       });
       form.reset();
     },
-    onError: async (error: any) => {
+
+    onError: (error: any) => {
       let message = t("contact.error");
 
-      try {
-        const res = await error.response?.json?.();
-        if (res?.message) {
-          message = res.message;
-        }
-      } catch (_) {
-        // Fallback error message
-        if (error instanceof Error) {
-          message = error.message;
-        }
+      if (error instanceof Error && error.message) {
+        message = error.message;
       }
 
       toast({
@@ -90,6 +89,7 @@ export default function ContactSection() {
         variant: "destructive",
       });
     },
+
     onSettled: () => setLoading(false),
   });
 
