@@ -50,7 +50,7 @@ export default function ContactSection() {
     mutationFn: async (data: ContactFormValues) => {
       const res = await apiRequest(
         "POST",
-        `${import.meta.env.VITE_API_URL}/mailchimp/newsletter`,
+        `${import.meta.env.VITE_PLATFORM_API_URL}/mailchimp/newsletter`,
         {
           email: data.email,
           language: data.language,
