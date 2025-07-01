@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 const ITEMS_PER_PAGE = 6;
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
 
 interface Article {
   id: number;
@@ -33,7 +34,7 @@ export default function PressPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5150/api/articles/press")
+    fetch(`${API_BASE}/api/articles/press`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch press articles.");
         return res.json();
@@ -69,7 +70,7 @@ export default function PressPage() {
   const getImageUrl = (filename: string | null): string => {
     if (!filename) return "/fallback.jpg";
     if (filename.startsWith("http")) return filename;
-    return `http://localhost:5250/uploads/${filename}`;
+    return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${filename}`;
   };
 
   const getLocalizedField = (item: any, field: "title" | "content") => {

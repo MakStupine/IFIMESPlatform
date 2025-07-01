@@ -12,6 +12,8 @@ import {
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
+
 interface Article {
   id: number;
   slug: string;
@@ -80,7 +82,7 @@ export default function TitleDescNewsletter() {
 
     const dbTableName = category === "events" ? "event" : category;
 
-    fetch(`http://localhost:5150/api/articles/${dbTableName}`)
+    fetch(`${API_BASE}/api/articles/${dbTableName}`)
       .then((res) => res.json())
       .then((data) => {
         const match = data.find((item: any) => item.slug === slug);
@@ -92,7 +94,7 @@ export default function TitleDescNewsletter() {
         }
       });
 
-    fetch(`http://localhost:5150/api/share/${slug}`)
+    fetch(`${API_BASE}/api/share/${slug}`)
       .then((res) => res.json())
       .then((data) => {
         const counts: Record<string, number> = {};
@@ -104,7 +106,7 @@ export default function TitleDescNewsletter() {
   }, [category, slug]);
 
   useEffect(() => {
-    fetch("http://localhost:5150/api/articles/research")
+    fetch(`${API_BASE}/api/articles/research`)
       .then((res) => res.json())
       .then((data) => {
         const sorted = [...data].sort(
@@ -114,7 +116,7 @@ export default function TitleDescNewsletter() {
         setLatestResearch(sorted.slice(0, 5));
       });
 
-    fetch("http://localhost:5150/api/articles/press")
+    fetch(`${API_BASE}/api/articles/press`)
       .then((res) => res.json())
       .then((data) => {
         const sorted = [...data].sort(
@@ -131,7 +133,7 @@ export default function TitleDescNewsletter() {
       [platform]: (prev[platform] || 0) + 1,
     }));
 
-    fetch("http://localhost:5150/api/share", {
+    fetch(`${API_BASE}/api/share`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ slug, platform }),

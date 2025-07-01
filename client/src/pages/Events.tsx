@@ -4,6 +4,8 @@ import { Link } from "wouter";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
+
 interface EventItem {
   id: number;
   slug: string;
@@ -36,7 +38,7 @@ export default function EventPage() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5150/api/articles/event")
+    fetch(`${API_BASE}/api/articles/event`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch event articles.");
         return res.json();

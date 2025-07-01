@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 const ITEMS_PER_PAGE = 6;
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
 
 interface Article {
   id: number;
@@ -48,7 +49,7 @@ export default function ResearchPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5150/api/articles/research")
+    fetch(`${API_BASE}/api/articles/research`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch research articles.");
         return res.json();
