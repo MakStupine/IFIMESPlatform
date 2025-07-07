@@ -50,9 +50,10 @@ export default function ContactSection() {
 
   const contactMutation = useMutation({
     mutationFn: async (data: ContactFormValues) => {
+      // inside contactMutation
       const res = await apiRequest(
         "POST",
-        `${import.meta.env.VITE_ADMIN_API_URL}/mailchimp/contact`,
+        `${import.meta.env.VITE_ADMIN_API_URL}/api/mailchimp/contact`, // ✅ FIXED
         {
           email: data.email,
           language: data.language,
