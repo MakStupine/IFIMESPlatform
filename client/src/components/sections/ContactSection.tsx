@@ -34,6 +34,8 @@ export default function ContactSection() {
     }),
   });
 
+  const API_BASE_URL = import.meta.env.VITE_ADMIN_API_URL;
+
   type ContactFormValues = z.infer<typeof contactFormSchema>;
 
   const form = useForm<ContactFormValues>({
@@ -50,7 +52,7 @@ export default function ContactSection() {
     mutationFn: async (data: ContactFormValues) => {
       const res = await apiRequest(
         "POST",
-        `${import.meta.env.VITE_PLATFORM_API_URL}/mailchimp/newsletter`,
+        `${import.meta.env.VITE_ADMIN_API_URL}/mailchimp/newsletter`,
         {
           email: data.email,
           language: data.language,
