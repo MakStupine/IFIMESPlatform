@@ -80,6 +80,7 @@ export default function ContactSection() {
     },
 
     onError: (error: any) => {
+      // asada
       let message = t("contact.error");
 
       if (error?.messageCode === "already_subscribed") {
