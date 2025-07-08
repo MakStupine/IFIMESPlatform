@@ -175,7 +175,8 @@
     "nameLabel": "First Name",
     "namePlaceholder": "Enter your first name",
     "surnameLabel": "Last Name",
-    "surnamePlaceholder": "Enter your last name"
+    "surnamePlaceholder": "Enter your last name",
+    "alreadySubscribed": "You are already subscribed to our mailing list."
   },
 
   "footer": {

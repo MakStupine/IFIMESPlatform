@@ -83,7 +83,11 @@ export default function ContactSection() {
       let message = t("contact.error");
 
       if (error instanceof Error && error.message) {
-        message = error.message;
+        if (error.message.includes("is already a list member")) {
+          message = t("contact.alreadySubscribed"); // add this to your i18n
+        } else {
+          message = error.message;
+        }
       }
 
       toast({

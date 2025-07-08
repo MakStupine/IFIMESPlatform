@@ -175,7 +175,8 @@
     "nameLabel": "Ime",
     "namePlaceholder": "Unesite vaše ime",
     "surnameLabel": "Prezime",
-    "surnamePlaceholder": "Unesite vaše prezime"
+    "surnamePlaceholder": "Unesite vaše prezime",
+    "alreadySubscribed": "Već ste pretplaćeni na našu mailing listu."
   },
 
   "research": {
