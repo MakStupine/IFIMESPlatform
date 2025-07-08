@@ -80,11 +80,12 @@ export default function ContactSection() {
     },
 
     onError: (error: any) => {
-      // asada
       let message = t("contact.error");
 
       if (error?.messageCode === "already_subscribed") {
         message = t("contact.alreadySubscribed");
+      } else if (error?.messageCode === "permanently_deleted") {
+        message = t("contact.permanentlyDeleted"); // add this key to your translations
       } else if (error?.message) {
         message = error.message;
       }

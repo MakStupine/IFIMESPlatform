@@ -176,7 +176,9 @@
     "namePlaceholder": "Vnesite vaše ime",
     "surnameLabel": "Priimek",
     "surnamePlaceholder": "Vnesite vaš priimek",
-    "alreadySubscribed": "Na naš e-poštni seznam ste že prijavljeni."
+    "alreadySubscribed": "Na naš e-poštni seznam ste že prijavljeni.",
+    "permanentlyDeleted": "Ta e-poštni naslov je bil prej izbrisan in se mora ponovno ročno prijaviti.",
+    "error": "Prišlo je do napake. Poskusite znova."
   },
 
   "research": {

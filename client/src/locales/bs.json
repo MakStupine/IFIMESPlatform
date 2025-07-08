@@ -176,7 +176,9 @@
     "namePlaceholder": "Unesite vaše ime",
     "surnameLabel": "Prezime",
     "surnamePlaceholder": "Unesite vaše prezime",
-    "alreadySubscribed": "Već ste pretplaćeni na našu mailing listu."
+    "alreadySubscribed": "Već ste pretplaćeni na našu mailing listu.",
+    "permanentlyDeleted": "Ova email adresa je ranije izbrisana i mora se ponovo ručno prijaviti.",
+    "error": "Došlo je do greške. Molimo pokušajte ponovo."
   },
 
   "research": {

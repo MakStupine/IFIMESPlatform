@@ -176,7 +176,9 @@
     "namePlaceholder": "Enter your first name",
     "surnameLabel": "Last Name",
     "surnamePlaceholder": "Enter your last name",
-    "alreadySubscribed": "You are already subscribed to our mailing list."
+    "alreadySubscribed": "You are already subscribed to our mailing list.",
+    "permanentlyDeleted": "This email was previously deleted and must re-subscribe manually.",
+    "error": "An error occurred. Please try again."
   },
 
   "footer": {
