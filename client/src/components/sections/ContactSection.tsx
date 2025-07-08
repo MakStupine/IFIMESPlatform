@@ -80,26 +80,38 @@ export default function ContactSection() {
     },
 
     onError: (error: any) => {
-      let message = t("contact.error");
       console.log("Caught error in onError:", error);
 
-      // If error is a stringified JSON, parse it
-      if (typeof error === "string") {
+      let message = t("contact.error");
+
+      // First, if error is an Error object, try parsing error.message as JSON
+      if (error instanceof Error && typeof error.message === "string") {
         try {
-          const parsed = JSON.parse(error);
-          if (parsed.messageCode === "already_subscribed") {
-            message = t("contact.alreadySubscribed");
-          } else if (parsed.messageCode === "permanently_deleted") {
-            message = t("contact.permanentlyDeleted");
-          } else if (parsed.message) {
-            message = parsed.message;
+          // Sometimes message includes an HTTP status prefix, e.g. "500: {...}"
+          const jsonStart = error.message.indexOf("{");
+          if (jsonStart !== -1) {
+            const jsonString = error.message.slice(jsonStart);
+            const parsed = JSON.parse(jsonString);
+
+            if (parsed.messageCode === "already_subscribed") {
+              message = t("contact.alreadySubscribed");
+            } else if (parsed.messageCode === "permanently_deleted") {
+              message = t("contact.permanentlyDeleted");
+            } else if (parsed.message) {
+              message = parsed.message;
+            } else if (parsed.detail) {
+              message = parsed.detail;
+            }
+          } else {
+            // No JSON found in error message, fallback to whole string
+            message = error.message;
           }
         } catch {
-          // Not JSON, fallback to raw string error
-          message = error;
+          // Parsing failed, fallback to whole error.message string
+          message = error.message;
         }
       }
-      // If error is an object, read its properties safely
+      // If error is an object already
       else if (typeof error === "object" && error !== null) {
         if (error.messageCode === "already_subscribed") {
           message = t("contact.alreadySubscribed");
