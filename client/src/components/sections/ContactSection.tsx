@@ -81,13 +81,33 @@ export default function ContactSection() {
 
     onError: (error: any) => {
       let message = t("contact.error");
+      console.log("Caught error in onError:", error);
 
-      if (error?.messageCode === "already_subscribed") {
-        message = t("contact.alreadySubscribed");
-      } else if (error?.messageCode === "permanently_deleted") {
-        message = t("contact.permanentlyDeleted");
-      } else if (error?.message) {
-        message = error.message;
+      // If error is a stringified JSON, parse it
+      if (typeof error === "string") {
+        try {
+          const parsed = JSON.parse(error);
+          if (parsed.messageCode === "already_subscribed") {
+            message = t("contact.alreadySubscribed");
+          } else if (parsed.messageCode === "permanently_deleted") {
+            message = t("contact.permanentlyDeleted");
+          } else if (parsed.message) {
+            message = parsed.message;
+          }
+        } catch {
+          // Not JSON, fallback to raw string error
+          message = error;
+        }
+      }
+      // If error is an object, read its properties safely
+      else if (typeof error === "object" && error !== null) {
+        if (error.messageCode === "already_subscribed") {
+          message = t("contact.alreadySubscribed");
+        } else if (error.messageCode === "permanently_deleted") {
+          message = t("contact.permanentlyDeleted");
+        } else if (typeof error.message === "string") {
+          message = error.message;
+        }
       }
 
       toast({
