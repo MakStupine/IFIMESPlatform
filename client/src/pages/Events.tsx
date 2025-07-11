@@ -50,51 +50,57 @@ export default function EventPage() {
         if (!res.ok) throw new Error("Failed to fetch event articles.");
         return res.json();
       })
-.then((data) => {
-  const normalized: EventItem[] = data
-    .filter(
-      (item: any) => item.eventDate !== null && item.status === "published"
-    )
-    .map((item: any): EventItem => ({
-      id: item.id,
-      slug: item.slug,
-      eventDate: new Date(
-        typeof item.eventDate === "string" && !item.eventDate.includes("T")
-          ? `${item.eventDate}T00:00:00`
-          : item.eventDate
-      ),
-      createdAt: item.createdAt ?? item.created_at ?? "",
-      featuredImage: item.featuredImage ?? item.featured_image ?? null,
-      title_en: item.title_en,
-      content_en: item.content_en,
-      title_bs: item.title_bs,
-      content_bs: item.content_bs,
-      title_sl: item.title_sl,
-      content_sl: item.content_sl,
-    }));
+      .then((data) => {
+        const normalized: EventItem[] = data
+          .filter(
+            (item: any) =>
+              item.eventDate !== null && item.status === "published"
+          )
+          .map(
+            (item: any): EventItem => ({
+              id: item.id,
+              slug: item.slug,
+              eventDate: new Date(
+                typeof item.eventDate === "string" &&
+                !item.eventDate.includes("T")
+                  ? `${item.eventDate}T00:00:00`
+                  : item.eventDate
+              ),
+              createdAt: item.createdAt ?? item.created_at ?? "",
+              featuredImage: item.featuredImage ?? item.featured_image ?? null,
+              title_en: item.title_en,
+              content_en: item.content_en,
+              title_bs: item.title_bs,
+              content_bs: item.content_bs,
+              title_sl: item.title_sl,
+              content_sl: item.content_sl,
+            })
+          );
 
-  // ✅ Log each normalized item
-  normalized.forEach((event) => {
-    console.log("🟩 Normalized Event:", event);
-  });
+        normalized.forEach((event) => {
+          console.log("🟩 Normalized Event:", event);
+        });
 
-  const now = new Date().getTime();
+        const now = new Date().getTime();
 
-  const sortByEventDateDesc = (a: EventItem, b: EventItem) =>
-    new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime();
+        const sortByEventDateDesc = (a: EventItem, b: EventItem) =>
+          new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime();
 
-  const future = normalized
-    .filter((item) => new Date(item.eventDate).getTime() > now)
-    .sort(sortByEventDateDesc);
+        const future = normalized
+          .filter((item) => new Date(item.eventDate).getTime() > now)
+          .sort(sortByEventDateDesc);
 
-  const past = normalized
-    .filter((item) => new Date(item.eventDate).getTime() <= now)
-    .sort(sortByEventDateDesc);
+        const past = normalized
+          .filter((item) => new Date(item.eventDate).getTime() <= now)
+          .sort(sortByEventDateDesc);
 
-  setFutureEvents(future);
-  setPastEvents(past);
-})
-
+        setFutureEvents(future);
+        setPastEvents(past);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to fetch event articles:", err);
+      });
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
