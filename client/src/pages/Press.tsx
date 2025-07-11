@@ -67,10 +67,11 @@ export default function PressPage() {
     }
   };
 
-  const getImageUrl = (filename: string | null): string => {
-    if (!filename) return "/fallback.jpg";
-    if (filename.startsWith("http")) return filename;
-    return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${filename}`;
+  const getImageUrl = (image: string | null): string => {
+    if (!image) return "/fallback.jpg";
+    if (image.startsWith("data:image")) return image; // ✅ base64
+    if (image.startsWith("http")) return image;
+    return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${image}`;
   };
 
   const getLocalizedField = (item: any, field: "title" | "content") => {

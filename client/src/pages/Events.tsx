@@ -20,6 +20,13 @@ interface EventItem {
   content_sl: string;
 }
 
+const getImageUrl = (image: string | null): string => {
+  if (!image) return "/fallback.jpg";
+  if (image.startsWith("data:image")) return image; // base64
+  if (image.startsWith("http")) return image;
+  return `${API_BASE}/uploads/${image}`;
+};
+
 export default function EventPage() {
   const [view, setView] = useState<"future" | "past">("future");
   const [futureEvents, setFutureEvents] = useState<EventItem[]>([]);
@@ -142,7 +149,16 @@ export default function EventPage() {
                     className="block"
                   >
                     <div className="flex items-start space-x-4 bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow duration-200">
-                      <div className="w-2 h-2 mt-2 bg-blue-600 rounded-full flex-shrink-0" />
+                      {event.featuredImage && (
+                        <img
+                          src={getImageUrl(event.featuredImage)}
+                          alt={title}
+                          className="w-28 h-28 object-cover rounded-md flex-shrink-0"
+                          onError={(e) => {
+                            e.currentTarget.src = "/fallback.jpg";
+                          }}
+                        />
+                      )}
                       <div>
                         <p className="text-sm text-blue-600 font-semibold mb-1">
                           {event.eventDate &&

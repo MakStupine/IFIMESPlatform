@@ -58,10 +58,11 @@ export default function TitleDescNewsletter() {
   const [latestPress, setLatestPress] = useState<Article[]>([]);
   const [shareCounts, setShareCounts] = useState<Record<string, number>>({});
 
-  const getImageUrl = (filename: string | null): string => {
-    if (!filename) return "/fallback.jpg";
-    if (filename.startsWith("http")) return filename;
-    return `http://localhost:5250/uploads/${filename}`;
+  const getImageUrl = (image: string | null): string => {
+    if (!image) return "/fallback.jpg";
+    if (image.startsWith("data:image")) return image;
+    if (image.startsWith("http")) return image;
+    return `${API_BASE}/uploads/${image}`;
   };
 
   const getLocalized = (item: Article) => {

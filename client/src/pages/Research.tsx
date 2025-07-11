@@ -77,10 +77,11 @@ export default function ResearchPage() {
     return item[`${field}_${lang}`] || item[`${field}_en`] || "";
   };
 
-  const getImageUrl = (filename: string | null): string => {
-    if (!filename) return "/fallback.jpg";
-    if (filename.startsWith("http")) return filename;
-    return `http://localhost:5250/uploads/${filename}`;
+  const getImageUrl = (image: string | null): string => {
+    if (!image) return "/fallback.jpg";
+    if (image.startsWith("data:image")) return image; // ✅ base64
+    if (image.startsWith("http")) return image;
+    return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${image}`;
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
