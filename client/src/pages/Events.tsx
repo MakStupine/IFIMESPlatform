@@ -52,10 +52,8 @@ export default function EventPage() {
       })
       .then((data) => {
         const normalized: EventItem[] = data
-          .filter(
-            (item: any) =>
-              item.eventDate !== null && item.status === "published"
-          )
+          .filter((item: any) => true)
+
           .map(
             (item: any): EventItem => ({
               id: item.id,
