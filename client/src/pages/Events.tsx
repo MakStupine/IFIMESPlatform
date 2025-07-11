@@ -53,14 +53,13 @@ export default function EventPage() {
       .then((data) => {
         const normalized: EventItem[] = data
           .filter((item: any) => true)
-
           .map(
             (item: any): EventItem => ({
               id: item.id,
               slug: item.slug,
               eventDate: new Date(
                 typeof item.eventDate === "string"
-                  ? item.eventDate.replace(" ", "T") // turn "2025-07-11 00:00:00" → "2025-07-11T00:00:00"
+                  ? item.eventDate.replace(" ", "T")
                   : item.eventDate
               ),
               createdAt: item.createdAt ?? item.created_at ?? "",
@@ -74,21 +73,26 @@ export default function EventPage() {
             })
           );
 
-        normalized.forEach((event) => {
-          console.log("🟩 Normalized Event:", event);
-        });
-
-        const now = new Date().getTime();
+        const now = new Date();
+        now.setHours(0, 0, 0, 0); // normalize to start of day
 
         const sortByEventDateDesc = (a: EventItem, b: EventItem) =>
           new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime();
 
         const future = normalized
-          .filter((item) => new Date(item.eventDate).getTime() > now)
+          .filter((item) => {
+            const date = new Date(item.eventDate);
+            date.setHours(0, 0, 0, 0);
+            return date.getTime() >= now.getTime();
+          })
           .sort(sortByEventDateDesc);
 
         const past = normalized
-          .filter((item) => new Date(item.eventDate).getTime() <= now)
+          .filter((item) => {
+            const date = new Date(item.eventDate);
+            date.setHours(0, 0, 0, 0);
+            return date.getTime() < now.getTime();
+          })
           .sort(sortByEventDateDesc);
 
         setFutureEvents(future);
