@@ -61,9 +61,8 @@ export default function EventPage() {
               id: item.id,
               slug: item.slug,
               eventDate: new Date(
-                typeof item.eventDate === "string" &&
-                !item.eventDate.includes("T")
-                  ? `${item.eventDate}T00:00:00`
+                typeof item.eventDate === "string"
+                  ? item.eventDate.replace(" ", "T") // turn "2025-07-11 00:00:00" → "2025-07-11T00:00:00"
                   : item.eventDate
               ),
               createdAt: item.createdAt ?? item.created_at ?? "",
