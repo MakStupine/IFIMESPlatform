@@ -199,14 +199,14 @@ export default function ResearchPage() {
                         }}
                       />
                     </div>
-                    <div className="md:w-2/3 p-6 flex flex-col justify-between">
+                    <div className="md:w-2/3 p-6 flex flex-col justify-between min-h-[240px]">
                       <span className="text-sm text-primary-600 font-semibold">
                         {new Date(item.publishDate).toLocaleDateString("en-GB")}
                       </span>
                       <h2 className="text-xl font-bold text-gray-900 mt-2">
                         {getLocalizedField(item, "title")}
                       </h2>
-                      <p className="text-gray-600 mt-2 line-clamp-3">
+                      <p className="text-gray-600 mt-2 line-clamp-3 leading-relaxed text-base">
                         {getLocalizedField(item, "content")}
                       </p>
                       <span className="text-primary-600 font-medium mt-4 inline-block">
