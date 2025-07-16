@@ -25,7 +25,6 @@ interface Article {
   content_sl: string;
 }
 
-// Animation variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
@@ -62,7 +61,6 @@ export default function ResearchPage() {
         );
         setArticles(sorted);
       })
-
       .catch((err) => {
         console.error("❌ Failed to fetch research articles:", err);
       });
@@ -79,7 +77,7 @@ export default function ResearchPage() {
 
   const getImageUrl = (image: string | null): string => {
     if (!image) return "/fallback.jpg";
-    if (image.startsWith("data:image")) return image; // ✅ base64
+    if (image.startsWith("data:image")) return image;
     if (image.startsWith("http")) return image;
     return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${image}`;
   };
@@ -114,7 +112,7 @@ export default function ResearchPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow pt-32 bg-gray-50 px-4 sm:px-6 lg:px-8">
+      <main className="flex-grow pt-32 pb-32 bg-gray-50 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <motion.h1
             className="text-3xl font-bold text-gray-900 mb-8"
@@ -174,65 +172,51 @@ export default function ResearchPage() {
 
           {/* 📄 Articles */}
           <motion.div
-            className="space-y-10"
+            className="space-y-10 min-h-[900px]" // Ensures space even for short lists
             key={i18n.language}
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
           >
-            {currentArticles.map((item, index) => {
-              // 👇 Log the final image URL for debugging
-              console.log(
-                "🖼 Featured image URL:",
-                getImageUrl(item.featuredImage)
-              );
-
-              return (
-                <Link
-                  key={item.slug}
-                  to={`/research/${item.slug}`}
-                  className="block"
+            {currentArticles.map((item) => (
+              <Link
+                key={item.slug}
+                to={`/research/${item.slug}`}
+                className="block"
+              >
+                <motion.div
+                  className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-200 min-h-[280px]"
+                  variants={fadeInUp}
                 >
-                  <motion.div
-                    className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-200"
-                    variants={fadeInUp}
-                  >
-                    <div className="flex flex-col md:flex-row">
-                      <div className="md:w-1/3">
-                        <img
-                          src={getImageUrl(item.featuredImage)}
-                          alt={getLocalizedField(item, "title")}
-                          className="w-full h-[200px] object-cover"
-                          onError={(e) => {
-                            e.currentTarget.src = "/fallback.jpg";
-                          }}
-                        />
-                      </div>
-                      <div
-                        className={`${
-                          index === 0 ? "md:w-1/3" : "md:w-2/3"
-                        } p-6 flex flex-col justify-center`}
-                      >
-                        <span className="text-sm text-primary-600 font-semibold">
-                          {new Date(item.publishDate).toLocaleDateString(
-                            "en-GB"
-                          )}
-                        </span>
-                        <h2 className="text-xl font-bold text-gray-900 mt-2">
-                          {getLocalizedField(item, "title")}
-                        </h2>
-                        <p className="text-gray-600 mt-2">
-                          {getLocalizedField(item, "content").slice(0, 150)}...
-                        </p>
-                        <span className="text-primary-600 font-medium mt-4 inline-block">
-                          {t("research.readMore")} →
-                        </span>
-                      </div>
+                  <div className="flex flex-col md:flex-row">
+                    <div className="md:w-1/3">
+                      <img
+                        src={getImageUrl(item.featuredImage)}
+                        alt={getLocalizedField(item, "title")}
+                        className="w-full h-[200px] object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "/fallback.jpg";
+                        }}
+                      />
                     </div>
-                  </motion.div>
-                </Link>
-              );
-            })}
+                    <div className="md:w-2/3 p-6 flex flex-col justify-between">
+                      <span className="text-sm text-primary-600 font-semibold">
+                        {new Date(item.publishDate).toLocaleDateString("en-GB")}
+                      </span>
+                      <h2 className="text-xl font-bold text-gray-900 mt-2">
+                        {getLocalizedField(item, "title")}
+                      </h2>
+                      <p className="text-gray-600 mt-2 line-clamp-3">
+                        {getLocalizedField(item, "content")}
+                      </p>
+                      <span className="text-primary-600 font-medium mt-4 inline-block">
+                        {t("research.readMore")} →
+                      </span>
+                    </div>
+                  </div>
+                </motion.div>
+              </Link>
+            ))}
 
             {currentArticles.length === 0 && (
               <p className="text-gray-500 text-center">
