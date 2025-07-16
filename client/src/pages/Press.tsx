@@ -163,29 +163,31 @@ export default function PressPage() {
                   className="block"
                 >
                   <div className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-200 min-h-[280px]">
-                    <div className="flex flex-col md:flex-row">
-                      <div className="md:w-1/3">
+                    <div className="flex flex-col md:flex-row h-full">
+                      <div className="md:w-1/3 h-full">
                         <img
                           src={getImageUrl(item.featuredImage)}
                           alt={title}
-                          className="w-full h-[200px] object-cover"
+                          className="w-full h-full object-cover"
                           onError={(e) => {
                             e.currentTarget.src = "/fallback.jpg";
                           }}
                         />
                       </div>
-                      <div className="md:w-2/3 p-6 flex flex-col justify-between">
-                        <span className="text-sm text-primary-600 font-semibold">
-                          {new Date(item.publishDate).toLocaleDateString(
-                            "en-GB"
-                          )}
-                        </span>
-                        <h2 className="text-xl font-bold text-gray-900 mt-2">
-                          {title}
-                        </h2>
-                        <p className="text-gray-600 mt-2 line-clamp-3">
-                          {content}
-                        </p>
+                      <div className="md:w-2/3 p-6 flex flex-col justify-between min-h-[240px]">
+                        <div>
+                          <span className="text-sm text-primary-600 font-semibold">
+                            {new Date(item.publishDate).toLocaleDateString(
+                              "en-GB"
+                            )}
+                          </span>
+                          <h2 className="text-xl font-bold text-gray-900 mt-2">
+                            {title}
+                          </h2>
+                          <p className="text-gray-600 mt-2 line-clamp-3 leading-relaxed text-base">
+                            {content}
+                          </p>
+                        </div>
                         <span className="text-primary-600 font-medium mt-4 inline-block">
                           {t("press.readMore")} →
                         </span>
