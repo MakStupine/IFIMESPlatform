@@ -69,14 +69,9 @@ export default function PressPage() {
 
   const getImageUrl = (image: string | null): string => {
     if (!image) return "/fallback.jpg";
-    if (image.startsWith("data:image")) return image; // ✅ base64
+    if (image.startsWith("data:image")) return image;
     if (image.startsWith("http")) return image;
     return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${image}`;
-  };
-
-  const getLocalizedField = (item: any, field: "title" | "content") => {
-    const lang = i18n.language;
-    return item[`${field}_${lang}`] || item[`${field}_en`] || "";
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -114,7 +109,7 @@ export default function PressPage() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-grow pt-32 bg-gray-50 px-4 sm:px-6 lg:px-8">
+      <main className="flex-grow pt-32 pb-32 bg-gray-50 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">
             {t("press.title")}
@@ -157,7 +152,7 @@ export default function PressPage() {
           </div>
 
           {/* 📰 Articles List */}
-          <div className="space-y-10">
+          <div className="space-y-10 min-h-[900px]">
             {currentArticles.map((item) => {
               const { title, content } = getLocalized(item);
 
@@ -167,7 +162,7 @@ export default function PressPage() {
                   to={`/press/${item.slug}`}
                   className="block"
                 >
-                  <div className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-200">
+                  <div className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-200 min-h-[280px]">
                     <div className="flex flex-col md:flex-row">
                       <div className="md:w-1/3">
                         <img
@@ -179,7 +174,7 @@ export default function PressPage() {
                           }}
                         />
                       </div>
-                      <div className="md:w-2/3 p-6 flex flex-col justify-center">
+                      <div className="md:w-2/3 p-6 flex flex-col justify-between">
                         <span className="text-sm text-primary-600 font-semibold">
                           {new Date(item.publishDate).toLocaleDateString(
                             "en-GB"
@@ -188,8 +183,8 @@ export default function PressPage() {
                         <h2 className="text-xl font-bold text-gray-900 mt-2">
                           {title}
                         </h2>
-                        <p className="text-gray-600 mt-2">
-                          {content.slice(0, 150)}...
+                        <p className="text-gray-600 mt-2 line-clamp-3">
+                          {content}
                         </p>
                         <span className="text-primary-600 font-medium mt-4 inline-block">
                           {t("press.readMore")} →
