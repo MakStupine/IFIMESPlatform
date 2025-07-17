@@ -38,7 +38,7 @@ export default function Home() {
 
       {/* Chatbot popup */}
       {isChatOpen && (
-        <div className="fixed bottom-20 left-8 w-80 h-[400px] bg-white shadow-lg rounded-lg flex flex-col overflow-hidden z-50">
+        <div className="fixed bottom-20 right-8 w-80 h-[400px] bg-white shadow-lg rounded-lg flex flex-col overflow-hidden z-50">
           <div className="flex justify-between items-center p-4 border-b">
             <span className="font-semibold">Chatbot</span>
             <button
