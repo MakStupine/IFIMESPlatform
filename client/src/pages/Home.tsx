@@ -30,7 +30,7 @@ export default function Home() {
           <div className="flex justify-between items-center bg-blue-600 text-white p-2">
             <span className="text-lg font-semibold">Chat with IFIMES</span>
             <button
-              className="hover:bg-blue-700 p-3 rounded"
+              className="hover:bg-blue-700 p-6 rounded"
               onClick={() => setChatOpen(false)}
               aria-label="Close chat"
             >
@@ -48,12 +48,12 @@ export default function Home() {
       {/* Chatbot button and conditional text */}
       <div className="fixed bottom-8 right-8 flex flex-col items-end z-50">
         {!isChatOpen && (
-          <div className="mb-2 text-sm bg-white text-gray-800 shadow-md rounded-full py-1 px-3">
+          <div className="mb-2 text-lg font-bold bg-white text-gray-800 shadow-md rounded-full py-2 px-4">
             Chat with IFIMES!
           </div>
         )}
         <button
-          className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+          className="bg-blue-600 text-white p-5 rounded-full shadow-xl hover:bg-blue-700 transition-colors"
           aria-label="Chatbot"
           onClick={() => setChatOpen(true)}
         >
