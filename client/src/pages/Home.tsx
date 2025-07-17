@@ -45,10 +45,13 @@ export default function Home() {
       )}
 
       {/* Fixed chatbot button with text */}
+      {/* Chatbot button and conditional text */}
       <div className="fixed bottom-8 right-8 flex flex-col items-end z-50">
-        <div className="mb-2 text-sm bg-white text-gray-800 shadow-md rounded-full py-1 px-3">
-          Chat with IFIMES!
-        </div>
+        {!isChatOpen && (
+          <div className="mb-2 text-sm bg-white text-gray-800 shadow-md rounded-full py-1 px-3">
+            Chat with IFIMES!
+          </div>
+        )}
         <button
           className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
           aria-label="Chatbot"
