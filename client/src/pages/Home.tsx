@@ -26,15 +26,15 @@ export default function Home() {
       <Footer />
 
       {isChatOpen && (
-        <div className="fixed bottom-24 right-8 w-80 h-96 bg-white rounded-lg shadow-lg flex flex-col overflow-hidden z-50">
+        <div className="fixed bottom-24 right-8 w-[22rem] h-[28rem] bg-white rounded-xl shadow-xl flex flex-col overflow-hidden z-50">
           <div className="flex justify-between items-center bg-blue-600 text-white p-2">
-            <span>Chat with IFIMES</span>
+            <span className="text-lg font-semibold">Chat with IFIMES</span>
             <button
-              className="hover:bg-blue-700 p-1 rounded"
+              className="hover:bg-blue-700 p-3 rounded"
               onClick={() => setChatOpen(false)}
               aria-label="Close chat"
             >
-              <X size={20} />
+              <X size={40} />
             </button>
           </div>
           <div className="flex-grow p-4 overflow-y-auto">
@@ -57,7 +57,7 @@ export default function Home() {
           aria-label="Chatbot"
           onClick={() => setChatOpen(true)}
         >
-          <MessageCircle size={24} />
+          <MessageCircle size={28} />
         </button>
       </div>
     </div>
