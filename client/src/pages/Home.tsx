@@ -30,7 +30,7 @@ export default function Home() {
           <div className="flex justify-between items-center bg-blue-600 text-white p-2">
             <span className="text-lg font-semibold">Chat with IFIMES</span>
             <button
-              className="hover:bg-blue-700 p-6 rounded"
+              className="hover:bg-blue-700 p-3 rounded"
               onClick={() => setChatOpen(false)}
               aria-label="Close chat"
             >
