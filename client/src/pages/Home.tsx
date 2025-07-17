@@ -24,7 +24,7 @@ export default function Home() {
 
       {/* Fixed chatbot button */}
       <button
-        className="fixed bottom-8 left-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
+        className="fixed bottom-8 right-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-colors z-50"
         aria-label="Chatbot"
         onClick={() => alert("Open chatbot!")}
       >
