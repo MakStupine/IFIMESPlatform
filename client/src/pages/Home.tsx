@@ -59,8 +59,8 @@ export default function Home() {
                 key={idx}
                 className={`break-words whitespace-pre-wrap max-w-[80%] px-4 py-2 rounded-xl ${
                   msg.sender === "user"
-                    ? "bg-blue-100 text-right self-end ml-auto"
-                    : "bg-gray-200 text-left self-start mr-auto"
+                    ? "bg-gray-200 text-left self-start mr-auto"
+                    : "bg-blue-100 text-right self-end ml-auto"
                 }`}
               >
                 {msg.text}
