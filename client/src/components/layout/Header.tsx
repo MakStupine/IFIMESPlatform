@@ -37,8 +37,6 @@ const dropdownVariants = {
   },
 };
 
-const [showSearch, setShowSearch] = useState(false);
-
 export default function Header() {
   const { t, i18n } = useTranslation();
   const [currentLanguage, setCurrentLanguage] = useState(() => {
@@ -153,7 +151,7 @@ export default function Header() {
             <motion.button
               whileHover={{ scale: 1.15, rotate: 3 }}
               transition={{ type: "spring", stiffness: 300 }}
-              onClick={() => setShowSearch((prev) => !prev)}
+              onClick={() => console.log("Search clicked")}
               className="p-3 rounded-full text-yellow-500 hover:text-yellow-600 transition-colors duration-300 focus:outline-none"
               aria-label="Search"
             >
