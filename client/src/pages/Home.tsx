@@ -30,7 +30,7 @@ export default function Home() {
       <Footer />
 
       {isChatOpen && (
-        <div className="fixed bottom-24 right-6 w-[22rem] h-[28rem] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 border border-gray-200">
+        <div className="fixed bottom-24 right-6 w-[26rem] h-[32rem] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 border border-gray-200">
           {/* Header */}
           <div className="flex justify-between items-center bg-blue-600 text-white px-4 py-3">
             <span className="text-lg font-semibold">Chat with IFIMES</span>
