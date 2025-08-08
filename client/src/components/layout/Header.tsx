@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Check, Globe } from "lucide-react";
+import { Check, Globe, Search } from "lucide-react";
 import { images } from "@/lib/constants";
 import { useTranslation } from "react-i18next";
 
@@ -147,6 +147,17 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
+            {/* Search Icon */}
+            <motion.button
+              whileHover={{ scale: 1.15, rotate: 3 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              onClick={() => console.log("Search clicked")}
+              className="p-3 rounded-full text-yellow-500 hover:text-yellow-600 transition-colors duration-300 focus:outline-none"
+              aria-label="Search"
+            >
+              <Search className="h-6 w-6" />
+            </motion.button>
+
             {/* Language Selector Icon */}
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
