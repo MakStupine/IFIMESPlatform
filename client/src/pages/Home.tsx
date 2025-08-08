@@ -8,6 +8,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ContactSection from "@/components/sections/ContactSection";
 import { MessageCircle, X } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function Home() {
   const [isChatOpen, setChatOpen] = useState(false);
@@ -15,6 +16,7 @@ export default function Home() {
     { text: string; sender: "user" | "bot" }[]
   >([]);
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="flex flex-col min-h-screen relative">
@@ -30,7 +32,7 @@ export default function Home() {
       <Footer />
 
       {isChatOpen && (
-        <div className="fixed bottom-24 right-6 w-[26rem] h-[32rem] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 border border-gray-200">
+        <div className="fixed bottom-24 right-6 w-[30rem] h-[36rem] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 border border-gray-200">
           {/* Header */}
           <div className="flex justify-between items-center bg-blue-600 text-white px-4 py-3">
             <span className="text-lg font-semibold">Chat with IFIMES</span>
@@ -101,7 +103,7 @@ export default function Home() {
         <button
           className="bg-blue-600 text-white p-5 rounded-full shadow-xl hover:bg-blue-700 transition-colors"
           aria-label="Chatbot"
-          onClick={() => setChatOpen(true)}
+          onClick={() => setChatOpen((prev) => !prev)}
         >
           <MessageCircle size={28} />
         </button>
