@@ -125,51 +125,22 @@ export default function Header() {
           </motion.div>
 
           {/* Desktop Nav */}
-          {/* Desktop Nav or Search Bar */}
-          <div className="hidden md:flex flex-1 justify-center items-center">
-            <AnimatePresence mode="wait">
-              {!showSearch ? (
-                <motion.nav
-                  key="nav"
-                  className="flex space-x-4"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {navItems.map(({ label, id }, index) => (
-                    <motion.button
-                      key={id}
-                      custom={index}
-                      initial="hidden"
-                      animate="visible"
-                      variants={navItemVariants}
-                      onClick={() => handleNavClick(id)}
-                      className="relative px-4 py-2 text-gray-700 font-medium hover:text-primary-600 transition-colors duration-300 group"
-                    >
-                      {t(label)}
-                      <span className="absolute bottom-1 left-[30%] w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-[60%] group-hover:left-[20%]"></span>
-                    </motion.button>
-                  ))}
-                </motion.nav>
-              ) : (
-                <motion.div
-                  key="search"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full max-w-md"
-                >
-                  <input
-                    type="text"
-                    placeholder={t("search_placeholder") || "Search..."}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all duration-200"
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          <motion.nav className="hidden md:flex space-x-4">
+            {navItems.map(({ label, id }, index) => (
+              <motion.button
+                key={id}
+                custom={index}
+                initial="hidden"
+                animate="visible"
+                variants={navItemVariants}
+                onClick={() => handleNavClick(id)}
+                className="relative px-4 py-2 text-gray-700 font-medium hover:text-primary-600 transition-colors duration-300 group"
+              >
+                {t(label)}
+                <span className="absolute bottom-1 left-[30%] w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-[60%] group-hover:left-[20%]"></span>
+              </motion.button>
+            ))}
+          </motion.nav>
 
           {/* Language & Contact */}
           <motion.div
