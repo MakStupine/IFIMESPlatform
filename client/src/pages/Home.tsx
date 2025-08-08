@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { MessageCircle, X } from "lucide-react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
@@ -7,19 +9,20 @@ import ServicesSection from "@/components/sections/ServicesSection";
 import AboutSection from "@/components/sections/AboutSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ContactSection from "@/components/sections/ContactSection";
-import { MessageCircle, X } from "lucide-react";
 
 export default function Home() {
+  const { t } = useTranslation();
   const [isChatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState<
     { text: string; sender: "user" | "bot" }[]
   >([]);
   const [input, setInput] = useState("");
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
 
   return (
@@ -37,9 +40,9 @@ export default function Home() {
 
       {isChatOpen && (
         <div className="fixed bottom-24 right-6 w-[30rem] h-[36rem] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 border border-gray-200">
-          {/* Header */}
+          {/* Chat Header */}
           <div className="flex justify-between items-center bg-blue-600 text-white px-4 py-3">
-            <span className="text-lg font-semibold">Chat with IFIMES</span>
+            <span className="text-lg font-semibold">{t("chat_title")}</span>
             <button
               className="hover:bg-blue-700 p-2 rounded-full"
               onClick={() => setChatOpen(false)}
@@ -49,7 +52,7 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Chat body */}
+          {/* Chat Body */}
           <div className="flex-grow p-4 overflow-y-auto space-y-3 text-sm">
             {messages.map((msg, idx) => (
               <div
@@ -66,7 +69,7 @@ export default function Home() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input bar */}
+          {/* Input */}
           <div className="border-t border-gray-200 p-2">
             <input
               type="text"
@@ -81,7 +84,7 @@ export default function Home() {
                   setMessages((prev) => [...prev, newMsg]);
                   setInput("");
 
-                  // Simulated bot response
+                  // Simulated bot reply
                   setTimeout(() => {
                     setMessages((prev) => [
                       ...prev,
@@ -91,17 +94,17 @@ export default function Home() {
                 }
               }}
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-              placeholder="Type a message..."
+              placeholder={t("chat_placeholder")}
             />
           </div>
         </div>
       )}
 
-      {/* Fixed chatbot button with text */}
+      {/* Chat Toggle Button */}
       <div className="fixed bottom-8 right-8 flex flex-col items-end z-50">
         {!isChatOpen && (
           <div className="mb-2 text-lg font-bold bg-white text-gray-800 shadow-md rounded-full py-2 px-4">
-            Chat with IFIMES!
+            {t("chat_title")}
           </div>
         )}
         <button
