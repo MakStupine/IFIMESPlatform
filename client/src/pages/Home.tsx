@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
@@ -8,7 +8,6 @@ import AboutSection from "@/components/sections/AboutSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import ContactSection from "@/components/sections/ContactSection";
 import { MessageCircle, X } from "lucide-react";
-import { useEffect, useRef } from "react";
 
 export default function Home() {
   const [isChatOpen, setChatOpen] = useState(false);
@@ -16,7 +15,12 @@ export default function Home() {
     { text: string; sender: "user" | "bot" }[]
   >([]);
   const [input, setInput] = useState("");
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="flex flex-col min-h-screen relative">
@@ -50,7 +54,7 @@ export default function Home() {
             {messages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`max-w-[80%] px-4 py-2 rounded-xl ${
+                className={`break-words whitespace-pre-wrap max-w-[80%] px-4 py-2 rounded-xl ${
                   msg.sender === "user"
                     ? "bg-blue-100 text-right self-end ml-auto"
                     : "bg-gray-200 text-left self-start mr-auto"
@@ -59,6 +63,7 @@ export default function Home() {
                 {msg.text}
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input bar */}
@@ -93,7 +98,6 @@ export default function Home() {
       )}
 
       {/* Fixed chatbot button with text */}
-      {/* Chatbot button and conditional text */}
       <div className="fixed bottom-8 right-8 flex flex-col items-end z-50">
         {!isChatOpen && (
           <div className="mb-2 text-lg font-bold bg-white text-gray-800 shadow-md rounded-full py-2 px-4">
