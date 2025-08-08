@@ -60,7 +60,7 @@ export default function Home() {
                 className={`break-words whitespace-pre-wrap max-w-[80%] px-4 py-2 rounded-xl ${
                   msg.sender === "user"
                     ? "bg-gray-200 text-left self-start mr-auto"
-                    : "bg-blue-100 text-right self-end ml-auto"
+                    : "bg-blue-100 text-left self-end ml-auto" // 👈 ADD text-left here
                 }`}
               >
                 {msg.text}
