@@ -104,7 +104,7 @@ export default function Header() {
               <img
                 src={images.logo}
                 alt="IFIMES"
-                className="h-24 w-auto transition-transform duration-300 hover:scale-110 drop-shadow-lg"
+                className="h-20 w-auto transition-transform duration-300 hover:scale-105"
               />
             </Link>
           </motion.div>
