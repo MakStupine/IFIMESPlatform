@@ -26,20 +26,62 @@ export default function Home() {
       <Footer />
 
       {isChatOpen && (
-        <div className="fixed bottom-24 right-8 w-[22rem] h-[28rem] bg-white rounded-xl shadow-xl flex flex-col overflow-hidden z-50">
-          <div className="flex justify-between items-center bg-blue-600 text-white p-2">
+        <div className="fixed bottom-24 right-6 w-[22rem] h-[28rem] bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden z-50 border border-gray-200">
+          {/* Header */}
+          <div className="flex justify-between items-center bg-blue-600 text-white px-4 py-3">
             <span className="text-lg font-semibold">Chat with IFIMES</span>
             <button
-              className="hover:bg-blue-700 p-3 rounded"
+              className="hover:bg-blue-700 p-2 rounded-full"
               onClick={() => setChatOpen(false)}
               aria-label="Close chat"
             >
-              <X size={40} />
+              <X size={28} />
             </button>
           </div>
-          <div className="flex-grow p-4 overflow-y-auto">
-            {/* Your chat content goes here */}
-            <p>Welcome to IFIMES chat!</p>
+
+          {/* Chat body */}
+          <div className="flex-grow p-4 overflow-y-auto space-y-3 text-sm">
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                className={`max-w-[80%] px-4 py-2 rounded-xl ${
+                  msg.sender === "user"
+                    ? "bg-blue-100 text-right self-end ml-auto"
+                    : "bg-gray-200 text-left self-start mr-auto"
+                }`}
+              >
+                {msg.text}
+              </div>
+            ))}
+          </div>
+
+          {/* Input bar */}
+          <div className="border-t border-gray-200 p-2">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && input.trim()) {
+                  const newMsg = {
+                    text: input.trim(),
+                    sender: "user" as const,
+                  };
+                  setMessages((prev) => [...prev, newMsg]);
+                  setInput("");
+
+                  // Simulated bot response
+                  setTimeout(() => {
+                    setMessages((prev) => [
+                      ...prev,
+                      { text: "Hello world", sender: "bot" },
+                    ]);
+                  }, 300);
+                }
+              }}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="Type a message..."
+            />
           </div>
         </div>
       )}
