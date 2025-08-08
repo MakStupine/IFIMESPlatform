@@ -186,6 +186,16 @@
     "error": "Prišlo je do napake. Poskusite znova."
   },
 
+  "articles": {
+    "noResults": "Ni najdenih člankov.",
+    "readMore": "Preberi več",
+    "page": "Stran",
+    "of": "od",
+    "prev": "Prejšnja",
+    "next": "Naslednja",
+    "title": "Članki"
+  },
+
   "research": {
     "title": "Raziskave",
     "readMore": "Preberi več",

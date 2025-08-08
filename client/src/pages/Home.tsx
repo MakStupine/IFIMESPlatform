@@ -88,7 +88,7 @@ export default function Home() {
                   setTimeout(() => {
                     setMessages((prev) => [
                       ...prev,
-                      { text: "Hello world", sender: "bot" },
+                      { text: "Hello world!", sender: "bot" },
                     ]);
                   }, 300);
                 }

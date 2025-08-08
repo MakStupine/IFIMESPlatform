@@ -53,6 +53,13 @@ export default function Header() {
   const closeMenu = () => setIsOpen(false);
   const toggleSearch = () => setIsSearchOpen((prev) => !prev);
 
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      navigate(`/articles?query=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+    }
+  };
+
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
@@ -89,10 +96,6 @@ export default function Header() {
     { label: "sl", native: "Slovenščina", flag: "🇸🇮" },
     { label: "bs", native: "Bosanski", flag: "🇧🇦" },
   ];
-
-  const [searchCategory, setSearchCategory] = useState<"research" | "press">(
-    "research"
-  );
 
   return (
     <header className={headerClass}>
@@ -148,35 +151,11 @@ export default function Header() {
                   className="hidden md:flex w-full"
                 >
                   <div className="flex w-full gap-2">
-                    {/* Category dropdown */}
-                    <select
-                      value={searchCategory}
-                      onChange={(e) =>
-                        setSearchCategory(
-                          e.target.value as "research" | "press"
-                        )
-                      }
-                      className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                    >
-                      <option value="research">{t("nav_research")}</option>
-                      <option value="press">{t("nav_press")}</option>
-                    </select>
-
                     {/* Search input */}
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && searchQuery.trim()) {
-                          navigate(
-                            `/${searchCategory}?query=${encodeURIComponent(
-                              searchQuery.trim()
-                            )}`
-                          );
-                          setIsSearchOpen(false);
-                        }
-                      }}
                       placeholder={t("search_placeholder")}
                       className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                       autoFocus

@@ -50,21 +50,20 @@ export default function EveryArticlePage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/articles/research`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch research articles.");
-        return res.json();
-      })
-      .then((data) => {
-        const sorted = data.sort(
-          (a: Article, b: Article) =>
+    Promise.all([
+      fetch(`${API_BASE}/api/articles/research`).then((res) => res.json()),
+      fetch(`${API_BASE}/api/articles/press`).then((res) => res.json()),
+    ])
+      .then(([research, press]) => {
+        const combined = [...research, ...press].sort(
+          (a, b) =>
             new Date(b.publishDate).getTime() -
             new Date(a.publishDate).getTime()
         );
-        setArticles(sorted);
+        setArticles(combined);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch research articles:", err);
+        console.error("❌ Failed to fetch articles:", err);
       });
   }, []);
 
@@ -122,7 +121,7 @@ export default function EveryArticlePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            {t("research.title")}
+            {t("articles.title")}
           </motion.h1>
 
           {/* 🔍 Search Bar */}
@@ -183,7 +182,7 @@ export default function EveryArticlePage() {
             {currentArticles.map((item) => (
               <Link
                 key={item.slug}
-                to={`/research/${item.slug}`}
+                to={`/${item.category.toLowerCase()}/${item.slug}`}
                 className="block"
               >
                 <motion.div
@@ -216,7 +215,7 @@ export default function EveryArticlePage() {
                         </p>
                       </div>
                       <span className="text-primary-600 font-medium mt-4 inline-block">
-                        {t("research.readMore")} →
+                        {t("articles.readMore")} →
                       </span>
                     </div>
                   </div>
@@ -226,7 +225,7 @@ export default function EveryArticlePage() {
 
             {currentArticles.length === 0 && (
               <p className="text-gray-500 text-center">
-                {t("research.noResults") || "No articles found."}
+                {t("articles.noResults") || "No articles found."}
               </p>
             )}
           </motion.div>
@@ -244,11 +243,11 @@ export default function EveryArticlePage() {
                 disabled={currentPage === 1}
                 className="px-5 py-2 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t("research.prev")}
+                {t("articles.prev")}
               </button>
 
               <span className="text-base text-gray-700 font-semibold">
-                {t("research.page")} {currentPage} {t("research.of")}{" "}
+                {t("articles.page")} {currentPage} {t("articles.of")}{" "}
                 {totalPages}
               </span>
 
@@ -259,7 +258,7 @@ export default function EveryArticlePage() {
                 disabled={currentPage === totalPages}
                 className="px-5 py-2 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t("research.next")}
+                {t("articles.next")}
               </button>
             </motion.div>
           )}

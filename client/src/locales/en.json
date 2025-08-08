@@ -202,6 +202,16 @@
     "rights": "All rights reserved."
   },
 
+  "articles": {
+    "noResults": "No articles found.",
+    "readMore": "Read more",
+    "page": "Page",
+    "of": "of",
+    "prev": "Previous",
+    "next": "Next",
+    "title": "Articles"
+  },
+
   "research": {
     "title": "Research",
     "readMore": "Read more",
