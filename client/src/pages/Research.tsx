@@ -38,13 +38,16 @@ const staggerContainer = {
   },
 };
 
+const urlSearchParams = new URLSearchParams(window.location.search);
+const initialQuery = urlSearchParams.get("query") || "";
+
 export default function ResearchPage() {
   const { t, i18n } = useTranslation();
   const [location] = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [articles, setArticles] = useState<Article[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [inputTerm, setInputTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialQuery);
+  const [inputTerm, setInputTerm] = useState(initialQuery);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
