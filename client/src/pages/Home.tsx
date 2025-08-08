@@ -11,6 +11,10 @@ import { MessageCircle, X } from "lucide-react";
 
 export default function Home() {
   const [isChatOpen, setChatOpen] = useState(false);
+  const [messages, setMessages] = useState<
+    { text: string; sender: "user" | "bot" }[]
+  >([]);
+  const [input, setInput] = useState("");
 
   return (
     <div className="flex flex-col min-h-screen relative">
