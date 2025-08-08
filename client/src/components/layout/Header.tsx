@@ -155,7 +155,7 @@ export default function Header() {
               className="p-3 rounded-full text-yellow-500 hover:text-yellow-600 transition-colors duration-300 focus:outline-none"
               aria-label="Search"
             >
-              <Search className="h-6 w-6" />
+              <Search className="h-7 w-7 font-bold" />
             </motion.button>
 
             {/* Language Selector Icon */}
