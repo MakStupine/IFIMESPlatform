@@ -55,7 +55,10 @@ export default function Header() {
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && searchQuery.trim()) {
-      navigate(`/articles?query=${encodeURIComponent(searchQuery.trim())}`);
+      navigate("/_temp"); // trigger rerender
+      setTimeout(() => {
+        navigate(`/articles?query=${encodeURIComponent(searchQuery.trim())}`);
+      }, 0);
       setIsSearchOpen(false);
     }
   };
@@ -156,6 +159,7 @@ export default function Header() {
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={handleSearch}
                       placeholder={t("search_placeholder")}
                       className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                       autoFocus
