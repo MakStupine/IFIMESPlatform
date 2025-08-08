@@ -90,6 +90,10 @@ export default function Header() {
     { label: "bs", native: "Bosanski", flag: "🇧🇦" },
   ];
 
+  const [searchCategory, setSearchCategory] = useState<"research" | "press">(
+    "research"
+  );
+
   return (
     <header className={headerClass}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -143,14 +147,31 @@ export default function Header() {
                   exit={{ opacity: 0, y: -10 }}
                   className="hidden md:flex w-full"
                 >
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={t("search_placeholder")}
-                    className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                    autoFocus
-                  />
+                  <div className="flex w-full gap-2">
+                    {/* Category dropdown */}
+                    <select
+                      value={searchCategory}
+                      onChange={(e) =>
+                        setSearchCategory(
+                          e.target.value as "research" | "press"
+                        )
+                      }
+                      className="px-3 py-2 rounded-md border border-gray-300 bg-white text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    >
+                      <option value="research">{t("nav_research")}</option>
+                      <option value="press">{t("nav_press")}</option>
+                    </select>
+
+                    {/* Search input */}
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder={t("search_placeholder")}
+                      className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                      autoFocus
+                    />
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
