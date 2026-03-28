@@ -11,16 +11,78 @@
   "search_placeholder": "Pretraga...",
   "nav_research": "Istraživanje",
   "nav_press": "Saopćenja",
+  "nav_research_menu": "Istraživanje",
+  "nav_media": "Mediji",
+  "nav_about_ifimes": "O IFIMES-u",
   "chat_title": "Razgovarajte sa IFIMES-om",
   "chat_placeholder": "Upišite poruku...",
+  "chat_welcome": "Pitajte me bilo šta o istraživanjima, saopćenjima i događajima IFIMES-a.",
+  "chat_sources": "Izvori",
+
+  "nav": {
+    "research": "Istraživanja i publikacije",
+    "research.all": "Sve publikacije",
+    "research.papers": "Istraživački radovi",
+    "research.policyBriefs": "Političke analize",
+    "research.analyses": "Analize i komentari",
+    "regions": "Regionalni fokus",
+    "events": "Događaji",
+    "events.upcoming": "Predstojeći događaji",
+    "events.conferences": "Konferencije",
+    "events.seminars": "Seminari i okrugli stolovi",
+    "events.archive": "Prošli događaji",
+    "media": "Medijski centar",
+    "media.press": "Saopštenja za javnost",
+    "media.news": "Vijesti i aktuelnosti",
+    "media.appearances": "Medijski nastupi",
+    "media.video": "Video i multimedija",
+    "media.newsletter": "Bilten",
+    "about": "O IFIMES-u",
+    "about.mission": "Misija i vizija",
+    "about.history": "Naša istorija",
+    "about.leadership": "Rukovodstvo i upravni odbor",
+    "about.accreditations": "Akreditacije",
+    "about.partners": "Partneri",
+    "about.contact": "Kontaktirajte nas",
+    "getInvolved": "Uključite se"
+  },
+
+  "regions": {
+    "title": "Regionalni fokus",
+    "subtitle": "Dubinska analiza i stručnost u ključnim geopolitičkim regijama",
+    "exploreBtn": "Istražite regiju",
+    "viewAll": "Pogledaj sve regije",
+    "balkans": {
+      "title": "Balkan i Jugoistočna Evropa",
+      "description": "Analiza procesa EU integracije, regionalne stabilnosti, demokratske tranzicije i ekonomskog razvoja u Jugoistočnoj Evropi."
+    },
+    "middleEast": {
+      "title": "Bliski istok i Sjeverna Afrika",
+      "description": "Stručni uvidi u regionalne sukobe, diplomatska dešavanja, energetsku sigurnost i geopolitičku dinamiku MENA regije."
+    },
+    "euroAtlantic": {
+      "title": "Evroatlantska zajednica i EU",
+      "description": "Istraživanje NATO politike, vanjske politike EU, transatlantskih odnosa i okvira sigurnosne saradnje."
+    }
+  },
+
+  "stats": {
+    "years": "Godina stručnosti",
+    "publications": "Publikacija",
+    "events": "Organizovanih događaja",
+    "countries": "Doseg u zemljama",
+    "accreditations": "UN akreditacija"
+  },
 
   "hero": {
     "fullName": "Međunarodni institut za bliskoistočne i balkanske studije",
-    "established": "Osnovano {{year}} | ECOSOC UN akreditacija",
-    "tagline": "Oblikujemo globalni dijalog kroz istraživanje i diplomatiju.",
-    "description": "IFIMES pruža nepristranu analizu i strateške uvide o ključnim međunarodnim pitanjima.",
+    "established": "Osnovano {{year}}",
+    "tagline": "Oblikujemo globalni dijalog kroz istraživanje i diplomatiju",
+    "description": "IFIMES pruža nepristranu analizu i strateške uvide o ključnim međunarodnim pitanjima, specijalizirani za Bliski istok, Balkan i euro-atlantske regije.",
     "servicesBtn": "Naše usluge",
-    "contactBtn": "Kontaktirajte nas"
+    "contactBtn": "Kontaktirajte nas",
+    "researchBtn": "Istraži istraživanja",
+    "eventsBtn": "Nadolazeći događaji"
   },
 
   "features": {
@@ -264,5 +326,174 @@
       "description": "Ugledni svjetski mediji referiraju se na IFIMES-ove analize koje se odnose na Istočnu Evropu i Bliski istok. Naši analitičari redovno gostuju u intervjuima, dajući uvid u ključna dešavanja.",
       "linkText": "Pogledaj medijsku pokrivenost"
     }
+  },
+
+  "partnerMap": {
+    "title": "Globalni doseg i partnerstva",
+    "subtitle": "Naša mreža se proteže preko kontinenata, povezujući nas sa vodećim institucijama i organizacijama širom svijeta",
+    "viewAll": "Pogledaj sve partnere",
+    "legend": {
+      "office": "IFIMES kancelarija",
+      "accreditation": "Akreditaciono tijelo",
+      "partner": "Partnerska organizacija"
+    }
+  },
+
+  "upcomingEvents": {
+    "title": "Predstojeći događaji",
+    "subtitle": "Pridružite nam se na predstojećim konferencijama, seminarima i okruglim stolovima",
+    "viewCalendar": "Pogledaj puni kalendar",
+    "noEvents": "Nema zakazanih događaja",
+    "registerBtn": "Registruj se"
+  },
+
+  "accreditations": {
+    "title": "Akreditacije i priznanja",
+    "subtitle": "Priznati od vodećih međunarodnih organizacija za našu posvećenost izvrsnosti u istraživanju i analizi"
+  },
+
+  "newsletter": {
+    "title": "Budite informisani",
+    "subtitle": "Pretplatite se i primajte naša najnovija istraživanja, analize i obavještenja o događajima direktno u vaš inbox",
+    "placeholder": "Unesite vašu email adresu",
+    "subscribe": "Pretplati se",
+    "subscribing": "Pretplata u toku...",
+    "success": "Hvala vam na pretplati!",
+    "error": "Pretplata nije uspjela. Molimo pokušajte ponovo."
+  },
+
+  "latestContent": {
+    "title": "Najnovije vijesti i istraživanja",
+    "subtitle": "Budite u toku sa našim najnovijim publikacijama, saopštenjima i analizama",
+    "viewAll": "Pogledaj sve publikacije",
+    "categories": {
+      "research": "Istraživanje",
+      "press": "Saopštenje",
+      "event": "Događaj",
+      "analysis": "Analiza"
+    }
+  },
+
+  "impactStats": {
+    "title": "Naš uticaj",
+    "subtitle": "Tri decenije unapređivanja globalnog razumijevanja kroz istraživanje i diplomatiju"
+  },
+
+  "aboutPage": {
+    "title": "O IFIMES-u",
+    "subtitle": "Međunarodni institut za bliskoistočne i balkanske studije",
+    "mission": {
+      "title": "Naša misija",
+      "content": "IFIMES je posvećen pružanju nezavisne, uravnotežene i objektivne analize geopolitičkih, ekonomskih i sigurnosnih pitanja na Bliskom istoku i Balkanu. Naša misija je poticati veće razumijevanje i saradnju kroz rigorozna istraživanja i konstruktivan dijalog."
+    },
+    "vision": {
+      "title": "Naša vizija",
+      "content": "Biti vodeći međunarodni think tank koji povezuje Istok i Zapad, oblikujući politički diskurs i promičući stabilnost kroz istraživanja zasnovana na dokazima i diplomatski angažman."
+    },
+    "history": {
+      "title": "Naša historija",
+      "content": "Osnovan 1995. godine u Ljubljani, Slovenija, IFIMES je izrastao iz regionalnog istraživačkog centra u međunarodno priznati institut sa konsultativnim statusom pri Ujedinjenim narodima. Tokom tri decenije objavili smo stotine studija, organizovali brojne međunarodne konferencije i savjetovali vlade i međunarodne organizacije o ključnim političkim pitanjima.",
+      "timeline": {
+        "1995": "IFIMES osnovan u Ljubljani, Slovenija",
+        "2004": "Dodijeljen Specijalni konsultativni status pri UN ECOSOC",
+        "2010": "Prošireni istraživački fokus na evroatlantske odnose",
+        "2015": "20. godišnjica - preko 400 publikacija",
+        "2020": "Pojačano digitalno prisustvo i globalni doseg",
+        "2025": "30 godina unapređivanja međunarodnog razumijevanja"
+      }
+    },
+    "leadership": {
+      "title": "Rukovodstvo i upravni odbor",
+      "content": "IFIMES vodi tim istaknutih naučnika, diplomata i stručnjaka za politiku sa decenijama iskustva u međunarodnim poslovima."
+    },
+    "accreditations": {
+      "title": "Akreditacije",
+      "content": "IFIMES ima konsultativni status pri glavnim međunarodnim organizacijama, što odražava našu posvećenost izvrsnosti i priznati doprinos međunarodnom diskursu."
+    },
+    "partners": {
+      "title": "Naši partneri",
+      "content": "Sarađujemo sa vodećim think tankovima, univerzitetima i međunarodnim organizacijama širom svijeta kako bismo unaprijedili istraživanja i promicali dijalog o ključnim globalnim pitanjima."
+    }
+  },
+
+  "getInvolved": {
+    "title": "Uključite se",
+    "subtitle": "Pridružite nam se u unapređivanju međunarodnog razumijevanja i saradnje",
+    "opportunitiesTitle": "Načini saradnje",
+    "opportunitiesSubtitle": "Otkrijte kako možete doprinijeti našoj misiji poticanja globalnog razumijevanja i regionalne stabilnosti",
+    "partnership": {
+      "title": "Postanite partner",
+      "description": "Sarađujte sa IFIMES-om na istraživačkim projektima, konferencijama i političkim inicijativama. Dobrodošla su partnerstva sa akademskim institucijama, think tankovima i međunarodnim organizacijama.",
+      "benefit1": "Zajedničke istraživačke publikacije i analize",
+      "benefit2": "Koorganizirane konferencije i seminari",
+      "benefit3": "Pristup našoj globalnoj mreži stručnjaka"
+    },
+    "research": {
+      "title": "Istraživačka saradnja",
+      "description": "Doprinesite našim istraživačkim inicijativama kao stručnjak, konsultant ili gostujući istraživač. Podijelite svoju ekspertizu o pitanjima Bliskog istoka i Balkana.",
+      "benefit1": "Objavljivanje pod okriljem IFIMES-a",
+      "benefit2": "Pristup istraživačkim resursima i arhivima",
+      "benefit3": "Saradnja sa međunarodnim istraživačima"
+    },
+    "careers": {
+      "title": "Mogućnosti zaposlenja",
+      "description": "Pridružite se našem timu posvećenih istraživača i analitičara koji rade na ključnim međunarodnim pitanjima.",
+      "benefit1": "Rad na utjecajnim geopolitičkim istraživanjima",
+      "benefit2": "Međunarodna izloženost i umrežavanje",
+      "benefit3": "Mogućnosti profesionalnog razvoja"
+    },
+    "internship": {
+      "title": "Program prakse",
+      "description": "Steknite praktično iskustvo u istraživanju međunarodnih odnosa. Naš program prakse namijenjen je studentima i mladim profesionalcima.",
+      "benefit1": "Mentorstvo viših istraživača",
+      "benefit2": "Praktično istraživačko iskustvo",
+      "benefit3": "Umrežavanje sa diplomatama i stručnjacima"
+    },
+    "whyPartner": {
+      "title": "Zašto sarađivati sa IFIMES-om?",
+      "content": "Više od 30 godina IFIMES je na čelu istraživanja i analiza o Bliskom istoku i Balkanu. Naša partnerstva su doprinijela značajnim političkim raspravama i promicala regionalnu stabilnost.",
+      "point1": "Specijalni konsultativni status pri UN ECOSOC",
+      "point2": "Mreža od 50+ partnerskih institucija širom svijeta",
+      "point3": "500+ objavljenih istraživačkih radova i analiza"
+    },
+    "cta": {
+      "title": "Spremni za promjene?",
+      "description": "Pridružite se našoj mreži partnera, istraživača i zagovornika koji rade na stabilnijem i povezanijem svijetu.",
+      "button": "Započnite razgovor"
+    },
+    "form": {
+      "title": "Kontaktirajte nas",
+      "subtitle": "Popunite obrazac ispod i javit ćemo vam se u roku od 48 sati",
+      "name": "Puno ime",
+      "email": "Email adresa",
+      "organization": "Organizacija",
+      "interestType": "Područje interesa",
+      "message": "Vaša poruka",
+      "other": "Ostalo",
+      "sending": "Slanje...",
+      "submit": "Pošalji poruku",
+      "successTitle": "Poruka poslana!",
+      "successMessage": "Hvala vam što ste nas kontaktirali. Javit ćemo vam se uskoro."
+    },
+    "directContact": {
+      "title": "Želite nas kontaktirati direktno?"
+    },
+    "subscribe": {
+      "title": "Pretplatite se na obavijesti",
+      "description": "Primajte naša najnovija istraživanja, saopštenja i najave događaja direktno u vaš inbox."
+    },
+    "contact": {
+      "title": "Kontaktirajte nas",
+      "description": "Imate pitanja ili želite saznati više? Kontaktirajte naš tim."
+    }
+  },
+
+  "stats": {
+    "subscribers": "Pretplatnika",
+    "years": "Godina stručnosti",
+    "publications": "Publikacija",
+    "events": "Organizovanih događaja",
+    "countries": "Doseg u zemljama",
+    "accreditations": "UN akreditacija"
   }
 }

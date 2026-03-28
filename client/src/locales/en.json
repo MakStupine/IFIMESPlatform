@@ -11,16 +11,78 @@
   "search_placeholder": "Search...",
   "nav_research": "Research",
   "nav_press": "Press",
+  "nav_research_menu": "Research",
+  "nav_media": "Media",
+  "nav_about_ifimes": "About IFIMES",
   "chat_title": "Chat with IFIMES",
   "chat_placeholder": "Type a message...",
+  "chat_welcome": "Ask me anything about IFIMES research, press releases, and events.",
+  "chat_sources": "Sources",
+
+  "nav": {
+    "research": "Research & Publications",
+    "research.all": "All Publications",
+    "research.papers": "Research Papers",
+    "research.policyBriefs": "Policy Briefs",
+    "research.analyses": "Analyses & Commentary",
+    "regions": "Regional Focus",
+    "events": "Events",
+    "events.upcoming": "Upcoming Events",
+    "events.conferences": "Conferences",
+    "events.seminars": "Seminars & Roundtables",
+    "events.archive": "Past Events",
+    "media": "Media Centre",
+    "media.press": "Press Releases",
+    "media.news": "News & Updates",
+    "media.appearances": "Media Appearances",
+    "media.video": "Video & Multimedia",
+    "media.newsletter": "Newsletter",
+    "about": "About IFIMES",
+    "about.mission": "Mission & Vision",
+    "about.history": "Our History",
+    "about.leadership": "Leadership & Board",
+    "about.accreditations": "Accreditations",
+    "about.partners": "Partners",
+    "about.contact": "Contact Us",
+    "getInvolved": "Get Involved"
+  },
+
+  "regions": {
+    "title": "Regional Focus",
+    "subtitle": "In-depth analysis and expertise across key geopolitical regions",
+    "exploreBtn": "Explore Region",
+    "viewAll": "View All Regions",
+    "balkans": {
+      "title": "Balkans & Southeast Europe",
+      "description": "Analysis of EU integration processes, regional stability, democratic transitions, and economic development in Southeast Europe."
+    },
+    "middleEast": {
+      "title": "Middle East & North Africa",
+      "description": "Expert insights on regional conflicts, diplomatic developments, energy security, and geopolitical dynamics in the MENA region."
+    },
+    "euroAtlantic": {
+      "title": "Euro-Atlantic & EU",
+      "description": "Research on NATO policy, EU foreign policy, transatlantic relations, and security cooperation frameworks."
+    }
+  },
+
+  "stats": {
+    "years": "Years of Expertise",
+    "publications": "Publications",
+    "events": "Events Organized",
+    "countries": "Countries Reached",
+    "accreditations": "UN Accreditations"
+  },
 
   "hero": {
     "fullName": "International Institute for Middle East and Balkan Studies",
-    "established": "Est. {{year}} | UN ECOSOC Accredited",
-    "tagline": "Shaping global dialogue through research and diplomacy.",
-    "description": "IFIMES provides unbiased analysis and strategic insights on pressing international affairs.",
+    "established": "Est. {{year}}",
+    "tagline": "Shaping global dialogue through research and diplomacy",
+    "description": "IFIMES provides unbiased analysis and strategic insights on pressing international affairs, specializing in the Middle East, Balkans, and Euro-Atlantic regions.",
     "servicesBtn": "Our Services",
-    "contactBtn": "Contact Us"
+    "contactBtn": "Contact Us",
+    "researchBtn": "Explore Research",
+    "eventsBtn": "Upcoming Events"
   },
 
   "features": {
@@ -280,5 +342,174 @@
       "description": "Major international media have referenced IFIMES's latest geopolitical insights related to Eastern Europe and the Middle East. Our analysts continue to appear in interviews, shedding light on underreported yet critical developments shaping regional security.",
       "linkText": "Explore Coverage"
     }
+  },
+
+  "partnerMap": {
+    "title": "Global Reach & Partnerships",
+    "subtitle": "Our network spans across continents, connecting with leading institutions and organizations worldwide",
+    "viewAll": "View All Partners",
+    "legend": {
+      "office": "IFIMES Office",
+      "accreditation": "Accreditation Body",
+      "partner": "Partner Organization"
+    }
+  },
+
+  "upcomingEvents": {
+    "title": "Upcoming Events",
+    "subtitle": "Join us at our upcoming conferences, seminars, and roundtables",
+    "viewCalendar": "View Full Calendar",
+    "noEvents": "No upcoming events scheduled",
+    "registerBtn": "Register"
+  },
+
+  "accreditations": {
+    "title": "Accreditations & Recognition",
+    "subtitle": "Recognized by leading international organizations for our commitment to excellence in research and analysis"
+  },
+
+  "newsletter": {
+    "title": "Stay Informed",
+    "subtitle": "Subscribe to receive our latest research, analysis, and event updates directly in your inbox",
+    "placeholder": "Enter your email address",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "success": "Thank you for subscribing!",
+    "error": "Subscription failed. Please try again."
+  },
+
+  "latestContent": {
+    "title": "Latest News & Research",
+    "subtitle": "Stay updated with our most recent publications, press releases, and analyses",
+    "viewAll": "View All Publications",
+    "categories": {
+      "research": "Research",
+      "press": "Press",
+      "event": "Event",
+      "analysis": "Analysis"
+    }
+  },
+
+  "impactStats": {
+    "title": "Our Impact",
+    "subtitle": "Three decades of advancing global understanding through research and diplomacy"
+  },
+
+  "aboutPage": {
+    "title": "About IFIMES",
+    "subtitle": "International Institute for Middle East and Balkan Studies",
+    "mission": {
+      "title": "Our Mission",
+      "content": "IFIMES is dedicated to providing independent, balanced, and objective analysis of geopolitical, economic, and security issues in the Middle East and Balkan regions. Our mission is to foster greater understanding and cooperation through rigorous research and constructive dialogue."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "content": "To be the leading international think tank bridging East and West, shaping policy discourse and promoting stability through evidence-based research and diplomatic engagement."
+    },
+    "history": {
+      "title": "Our History",
+      "content": "Founded in 1995 in Ljubljana, Slovenia, IFIMES has grown from a regional research center to an internationally recognized institute with consultative status at the United Nations. Over three decades, we have published hundreds of studies, organized numerous international conferences, and advised governments and international organizations on critical policy matters.",
+      "timeline": {
+        "1995": "IFIMES founded in Ljubljana, Slovenia",
+        "2004": "Granted Special Consultative Status with UN ECOSOC",
+        "2010": "Expanded research focus to include Euro-Atlantic relations",
+        "2015": "20th anniversary - over 400 publications",
+        "2020": "Enhanced digital presence and global outreach",
+        "2025": "30 years of advancing international understanding"
+      }
+    },
+    "leadership": {
+      "title": "Leadership & Board",
+      "content": "IFIMES is led by a team of distinguished scholars, diplomats, and policy experts with decades of experience in international affairs."
+    },
+    "accreditations": {
+      "title": "Accreditations",
+      "content": "IFIMES holds consultative status with major international organizations, reflecting our commitment to excellence and our recognized contribution to international discourse."
+    },
+    "partners": {
+      "title": "Our Partners",
+      "content": "We collaborate with leading think tanks, universities, and international organizations worldwide to advance research and promote dialogue on critical global issues."
+    }
+  },
+
+  "getInvolved": {
+    "title": "Get Involved",
+    "subtitle": "Join us in advancing international understanding and cooperation",
+    "opportunitiesTitle": "Ways to Collaborate",
+    "opportunitiesSubtitle": "Discover how you can contribute to our mission of fostering global understanding and regional stability",
+    "partnership": {
+      "title": "Partner With Us",
+      "description": "Collaborate with IFIMES on research projects, conferences, and policy initiatives. We welcome partnerships with academic institutions, think tanks, and international organizations.",
+      "benefit1": "Joint research publications and policy briefs",
+      "benefit2": "Co-organized conferences and seminars",
+      "benefit3": "Access to our global network of experts"
+    },
+    "research": {
+      "title": "Research Collaboration",
+      "description": "Contribute to our research initiatives as an expert, consultant, or visiting scholar. Share your expertise on Middle East and Balkan affairs.",
+      "benefit1": "Publish under the IFIMES banner",
+      "benefit2": "Access to research resources and archives",
+      "benefit3": "Collaborate with international scholars"
+    },
+    "careers": {
+      "title": "Career Opportunities",
+      "description": "Join our team of dedicated researchers and analysts working on critical international issues.",
+      "benefit1": "Work on impactful geopolitical research",
+      "benefit2": "International exposure and networking",
+      "benefit3": "Professional development opportunities"
+    },
+    "internship": {
+      "title": "Internship Program",
+      "description": "Gain hands-on experience in international affairs research. Our internship program is designed for students and young professionals.",
+      "benefit1": "Mentorship from senior researchers",
+      "benefit2": "Real-world research experience",
+      "benefit3": "Networking with diplomats and experts"
+    },
+    "whyPartner": {
+      "title": "Why Partner With IFIMES?",
+      "content": "For over 30 years, IFIMES has been at the forefront of research and analysis on the Middle East and Balkans. Our partnerships have contributed to meaningful policy discussions and promoted regional stability.",
+      "point1": "UN ECOSOC Special Consultative Status",
+      "point2": "Network of 50+ partner institutions worldwide",
+      "point3": "500+ published research papers and analyses"
+    },
+    "cta": {
+      "title": "Ready to Make an Impact?",
+      "description": "Join our network of partners, researchers, and advocates working towards a more stable and interconnected world.",
+      "button": "Start a Conversation"
+    },
+    "form": {
+      "title": "Get in Touch",
+      "subtitle": "Fill out the form below and we'll get back to you within 48 hours",
+      "name": "Full Name",
+      "email": "Email Address",
+      "organization": "Organization",
+      "interestType": "Area of Interest",
+      "message": "Your Message",
+      "other": "Other",
+      "sending": "Sending...",
+      "submit": "Send Message",
+      "successTitle": "Message Sent!",
+      "successMessage": "Thank you for reaching out. We'll be in touch soon."
+    },
+    "directContact": {
+      "title": "Prefer to reach us directly?"
+    },
+    "subscribe": {
+      "title": "Subscribe to Updates",
+      "description": "Receive our latest research, press releases, and event announcements directly in your inbox."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Have questions or want to learn more? Get in touch with our team."
+    }
+  },
+
+  "stats": {
+    "subscribers": "Subscribers",
+    "years": "Years of Expertise",
+    "publications": "Publications",
+    "events": "Events Organized",
+    "countries": "Countries Reached",
+    "accreditations": "UN Accreditations"
   }
 }

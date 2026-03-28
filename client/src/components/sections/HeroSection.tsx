@@ -1,140 +1,146 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import {
-  fadeInUp,
-  fadeInLeft,
-  fadeInRight,
-  staggerContainer,
-} from "@/lib/animations";
-import { companyInfo, images } from "@/lib/constants";
-import { useLocation } from "wouter";
+import { companyInfo } from "@/lib/constants";
+import { Link } from "wouter";
 import { useTranslation } from "react-i18next";
+import { BookOpen, Calendar, Globe, Award, ChevronRight } from "lucide-react";
 
 export default function HeroSection() {
   const { t } = useTranslation();
-  const [location, navigate] = useLocation();
 
-  const scrollToSection = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) {
-      const offset = -80;
-      const y = section.getBoundingClientRect().top + window.scrollY + offset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
-
-  const handleNavClick = (id: string) => {
-    if (location !== "/") {
-      navigate("/");
-      setTimeout(() => scrollToSection(id), 100);
-    } else {
-      scrollToSection(id);
-    }
-  };
+  const highlights = [
+    { icon: Globe, label: "UN ECOSOC Status", color: "text-blue-300" },
+    { icon: Award, label: "30+ Years of Research", color: "text-yellow-300" },
+    { icon: BookOpen, label: "500+ Publications", color: "text-green-300" },
+  ];
 
   return (
-    <section
-      id="home"
-      className="relative pt-24 md:pt-32 pb-16 md:pb-24 bg-[#1952F3] overflow-hidden"
-    >
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:30px_30px] pointer-events-none"></div>
+    <section id="home" className="relative min-h-[90vh] flex items-center overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?q=80&w=2070"
+          alt="Global diplomacy"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/95 to-gray-900/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-gray-900/50" />
+      </div>
 
-      {/* Gradient overlay */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary-900/80 to-transparent opacity-70"></div>
-
-      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="flex flex-col md:flex-row items-center justify-between"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Text content */}
+          className="absolute top-20 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute bottom-20 left-20 w-80 h-80 bg-yellow-500/10 rounded-full blur-3xl"
+          animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity, delay: 2 }}
+        />
+      </div>
+
+      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="max-w-4xl">
+          {/* Accreditation Badge */}
           <motion.div
-            className="md:w-1/2 lg:w-3/5 mb-12 md:mb-0"
-            variants={fadeInLeft}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8"
           >
-            <motion.div variants={fadeInUp} className="mb-4">
-              <span className="inline-block py-1 px-3 bg-white/10 backdrop-blur-sm text-white text-sm font-medium rounded-full mb-4">
-                {t("hero.established", { year: companyInfo.founded })}
+            <span className="inline-flex items-center gap-2 py-2 px-4 bg-white/10 backdrop-blur-md text-white text-sm font-medium rounded-full border border-white/20">
+              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+              {t("hero.established", { year: companyInfo.founded })} • Ljubljana, Slovenia
+            </span>
+          </motion.div>
+
+          {/* Main Title */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6">
+              <span className="block text-blue-400">IFIMES</span>
+              <span className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-medium text-white/90">
+                {t("hero.fullName")}
               </span>
-            </motion.div>
-
-            <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
-              variants={fadeInUp}
-            >
-              {t("hero.fullName")}
-            </motion.h1>
-
-            <motion.p
-              className="text-xl md:text-2xl mb-6 text-white font-light max-w-2xl"
-              variants={fadeInUp}
-            >
-              {t("hero.tagline")}
-            </motion.p>
-
-            <motion.p
-              className="text-lg mb-8 text-white opacity-90 max-w-xl"
-              variants={fadeInUp}
-            >
-              {t("hero.description")}
-            </motion.p>
-
-            <motion.div
-              className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
-              variants={fadeInUp}
-            >
-              <Button
-                size="lg"
-                className="bg-yellow-500 text-white hover:bg-yellow-400 transition-all duration-300 font-medium shadow-lg hover:shadow-xl"
-                onClick={() => handleNavClick("services")}
-              >
-                {t("hero.servicesBtn")}
-              </Button>
-
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-yellow-500 text-yellow-500 hover:bg-yellow-100 hover:text-yellow-600 transition-all duration-300 backdrop-blur-sm"
-                onClick={() => handleNavClick("contact")}
-              >
-                {t("hero.contactBtn")}
-              </Button>
-            </motion.div>
+            </h1>
           </motion.div>
 
-          {/* Hero image */}
-          <motion.div
-            className="md:w-1/2 lg:w-2/5 flex justify-center md:justify-end"
-            variants={fadeInRight}
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl md:text-2xl text-gray-300 mb-4 max-w-2xl font-light"
           >
-            <div className="relative">
-              <img
-                src={images.hero}
-                alt="IFIMES Global Analysis"
-                className="relative z-10 rounded-lg shadow-2xl border border-white/20 max-w-full h-auto object-cover"
-                style={{ maxHeight: "450px", width: "500px" }}
-              />
-              <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-gradient-to-tr from-blue-500/30 to-purple-500/30 rounded-full blur-2xl z-0"></div>
-              <div className="absolute -top-6 -left-6 w-48 h-48 bg-gradient-to-br from-yellow-500/20 to-red-500/20 rounded-full blur-xl z-0"></div>
-            </div>
+            {t("hero.tagline")}
+          </motion.p>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg text-gray-400 mb-10 max-w-xl"
+          >
+            {t("hero.description")}
+          </motion.p>
+
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-col sm:flex-row gap-4 mb-12"
+          >
+            <Link href="/research">
+              <Button
+                size="lg"
+                className="bg-blue-600 text-white hover:bg-blue-500 transition-all duration-300 font-medium shadow-lg hover:shadow-blue-500/25 hover:shadow-xl px-8 py-6 text-lg group"
+              >
+                <BookOpen className="mr-2 h-5 w-5" />
+                {t("hero.researchBtn")}
+                <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+
+            <Link href="/events">
+              <Button
+                size="lg"
+                className="bg-white text-gray-900 hover:bg-gray-100 transition-all duration-300 px-8 py-6 text-lg font-medium"
+              >
+                <Calendar className="mr-2 h-5 w-5" />
+                {t("hero.eventsBtn")}
+              </Button>
+            </Link>
           </motion.div>
-        </motion.div>
+
+          {/* Highlight Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-wrap gap-6"
+          >
+            {highlights.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center gap-3 bg-white/5 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/10"
+              >
+                <item.icon className={`h-5 w-5 ${item.color}`} />
+                <span className="text-white/80 text-sm font-medium">{item.label}</span>
+              </div>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
-      {/* Bottom curved shape */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden">
-        <svg
-          className="relative block w-full h-12 md:h-20"
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          fill="#f7f8f9"
-        >
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0C0,0,51,82,341.39,56.44Z" />
-        </svg>
-      </div>
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 to-transparent" />
     </section>
   );
 }

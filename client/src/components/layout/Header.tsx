@@ -1,25 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Check, Globe, Search } from "lucide-react";
+import { ChevronDown, Globe, Search, X, Menu } from "lucide-react";
 import { images } from "@/lib/constants";
 import { useTranslation } from "react-i18next";
-
-const navItemVariants = {
-  hidden: { opacity: 0, y: -10 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1 },
-  }),
-};
+import { cn } from "@/lib/utils";
 
 export default function Header() {
   const { t, i18n } = useTranslation();
@@ -34,7 +25,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -49,30 +40,32 @@ export default function Header() {
     return () => i18n.off("languageChanged", onLanguageChanged);
   }, [i18n]);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => setIsOpen(false);
-  const toggleSearch = () => setIsSearchOpen((prev) => !prev);
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && searchQuery.trim()) {
-      navigate("/_temp"); // trigger rerender
+      navigate("/_temp");
       setTimeout(() => {
         navigate(`/articles?query=${encodeURIComponent(searchQuery.trim())}`);
       }, 0);
       setIsSearchOpen(false);
+      setSearchQuery("");
     }
   };
 
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
-      const offset = -80;
+      const offset = -100;
       const y = section.getBoundingClientRect().top + window.scrollY + offset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
 
   const handleNavClick = (id: string) => {
+    setIsOpen(false);
     if (location !== "/") {
       navigate("/");
       setTimeout(() => scrollToSection(id), 100);
@@ -81,133 +74,119 @@ export default function Header() {
     }
   };
 
-  const headerClass = scrolled
-    ? "fixed w-full bg-white shadow-md z-50 transition-all duration-300 border-b border-gray-100"
-    : "fixed w-full bg-white z-50 transition-all duration-300";
-
-  const navItems = [
-    { label: "nav_home", id: "home" },
-    { label: "nav_features", id: "features" },
-    { label: "nav_services", id: "services" },
-    { label: "nav_about", id: "about" },
-    { label: "nav_testimonials", id: "testimonials" },
-    { label: "nav_contact", id: "contact" },
-  ];
-
   const languages = [
     { label: "en", native: "English", flag: "🇬🇧" },
     { label: "sl", native: "Slovenščina", flag: "🇸🇮" },
     { label: "bs", native: "Bosanski", flag: "🇧🇦" },
   ];
 
+  const getCurrentLanguageDisplay = () => {
+    const lang = languages.find((l) => l.label === currentLanguage);
+    return lang ? lang.native : "English";
+  };
+
+  // Simple nav links
+  const navLinks = [
+    { label: t("nav_research", "Research"), href: "/research" },
+    { label: t("nav_press", "Press"), href: "/press" },
+    { label: t("nav_events", "Events"), href: "/events" },
+    { label: t("nav_media", "Media Centre"), href: "/media" },
+  ];
+
+  // About dropdown items - scroll to sections on home page
+  const aboutSections = [
+    { label: t("nav.about.mission", "Mission & Vision"), id: "features" },
+    { label: t("stats.title", "Our Impact"), id: "impact-stats" },
+    { label: t("partnerMap.title", "Partners"), id: "partner-map" },
+    { label: t("accreditations.title", "Accreditations"), id: "accreditations" },
+  ];
+
   return (
-    <header className={headerClass}>
+    <header
+      className={cn(
+        "fixed w-full z-50 bg-white transition-shadow duration-300",
+        scrolled ? "shadow-lg" : "shadow-sm"
+      )}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Link href="/" className="flex items-center">
-              <img
-                src={images.logo}
-                alt="IFIMES"
-                className="h-20 w-auto transition-transform duration-300 hover:scale-105"
-              />
-            </Link>
-          </motion.div>
+        <div className="flex items-center justify-between h-20">
+          {/* Logo - Left */}
+          <Link href="/" className="flex-shrink-0">
+            <img
+              src={images.logo}
+              alt="IFIMES"
+              className="h-16 w-auto"
+            />
+          </Link>
 
-          {/* Desktop Nav or Search */}
-          <div className="flex-1 ml-8">
-            <AnimatePresence mode="wait">
-              {!isSearchOpen ? (
-                <motion.nav
-                  key="nav"
-                  className="hidden md:flex space-x-4"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  {navItems.map(({ label, id }, index) => (
-                    <motion.button
-                      key={id}
-                      custom={index}
-                      initial="hidden"
-                      animate="visible"
-                      variants={navItemVariants}
-                      onClick={() => handleNavClick(id)}
-                      className="relative px-4 py-2 text-gray-700 font-medium hover:text-primary-600 transition-colors duration-300 group"
-                    >
-                      {t(label)}
-                      <span className="absolute bottom-1 left-[30%] w-0 h-0.5 bg-yellow-500 transition-all duration-300 group-hover:w-[60%] group-hover:left-[20%]"></span>
-                    </motion.button>
-                  ))}
-                </motion.nav>
-              ) : (
-                <motion.div
-                  key="search"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="hidden md:flex w-full"
-                >
-                  <div className="flex w-full gap-2">
-                    {/* Search input */}
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={handleSearch}
-                      placeholder={t("search_placeholder")}
-                      className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                      autoFocus
-                    />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-1">
+            {/* Simple Nav Links */}
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "px-4 py-2 text-[14px] font-medium rounded-lg transition-colors",
+                  location === link.href
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
 
-          {/* Icons */}
-          <motion.div
-            className="hidden md:flex items-center space-x-4"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            {/* Search Icon */}
-            <motion.button
-              whileHover={{ scale: 1.15, rotate: 3 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              onClick={toggleSearch}
-              className="p-3 rounded-full text-yellow-500 hover:text-yellow-600 transition-colors duration-300 focus:outline-none"
-              aria-label="Search"
+            {/* About IFIMES Dropdown */}
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center px-4 py-2 text-[14px] font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors">
+                  {t("nav.about", "About IFIMES")}
+                  <ChevronDown className="ml-1 h-4 w-4" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-52">
+                {aboutSections.map((section) => (
+                  <DropdownMenuItem
+                    key={section.id}
+                    onClick={() => handleNavClick(section.id)}
+                    className="cursor-pointer"
+                  >
+                    {section.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Get Involved Button */}
+            <Link
+              href="/get-involved"
+              className="ml-2 px-5 py-2 bg-blue-600 text-white text-[14px] font-medium rounded-lg hover:bg-blue-700 transition-colors"
             >
-              <Search className="h-9 w-9 font-bold" />
-            </motion.button>
+              {t("nav.getInvolved", "Get Involved")}
+            </Link>
+
+            {/* Divider */}
+            <div className="h-6 w-px bg-gray-200 mx-3" />
 
             {/* Language Selector */}
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
-                <motion.button
-                  whileHover={{ scale: 1.15, rotate: 3 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="p-3 rounded-full text-yellow-500 hover:text-yellow-600 transition-colors duration-300 focus:outline-none"
-                  aria-label="Select language"
-                >
-                  <Globe className="h-9 w-9" />
-                </motion.button>
+                <button className="flex items-center px-3 py-2 text-[14px] text-gray-600 hover:text-blue-600 transition-colors">
+                  <Globe className="h-4 w-4 mr-2" />
+                  {getCurrentLanguageDisplay()}
+                  <ChevronDown className="ml-1 h-3 w-3" />
+                </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-40">
+              <DropdownMenuContent align="end" className="w-44">
                 {languages.map((lang) => (
                   <DropdownMenuItem
                     key={lang.label}
                     onClick={() => i18n.changeLanguage(lang.label)}
-                    className={
-                      currentLanguage === lang.label ? "bg-yellow-100" : ""
-                    }
+                    className={cn(
+                      "cursor-pointer",
+                      currentLanguage === lang.label ? "bg-blue-50 text-blue-600" : ""
+                    )}
                   >
                     <span className="mr-2">{lang.flag}</span>
                     {lang.native}
@@ -216,42 +195,154 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Contact Icon */}
-            <motion.button
-              whileHover={{ scale: 1.15, rotate: -3 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              onClick={() => handleNavClick("contact")}
-              className="p-3 rounded-full text-yellow-500 hover:text-yellow-600 transition-colors duration-300 focus:outline-none"
-              aria-label="Contact us"
-            >
-              <i className="bx bx-message-detail text-4xl translate-y-[2px]" />
-            </motion.button>
-          </motion.div>
-
-          {/* Mobile Toggle */}
-          <div className="md:hidden flex items-center">
+            {/* Search Button */}
             <button
-              onClick={toggleMenu}
-              className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-              aria-label="Toggle menu"
+              onClick={() => setIsSearchOpen(true)}
+              className="p-2 text-gray-600 hover:text-blue-600 transition-colors"
             >
-              <i className={`bx ${isOpen ? "bx-x" : "bx-menu"} text-2xl`}></i>
+              <Search className="h-5 w-5" />
             </button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Search Overlay */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-50"
+            onClick={() => setIsSearchOpen(false)}
+          >
+            <motion.div
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -50, opacity: 0 }}
+              className="bg-white shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div className="flex items-center gap-4">
+                  <Search className="h-6 w-6 text-gray-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleSearch}
+                    placeholder={t("search_placeholder")}
+                    className="flex-1 text-xl outline-none bg-transparent placeholder-gray-400"
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => {
+                      setIsSearchOpen(false);
+                      setSearchQuery("");
+                    }}
+                    className="p-2 text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
-            {/* Your mobile nav menu stays as-is */}
+            <div className="container mx-auto px-4 py-4 space-y-2">
+              {/* Mobile Search */}
+              <div className="pb-4 mb-4 border-b border-gray-100">
+                <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-3">
+                  <Search className="h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleSearch}
+                    placeholder={t("search_placeholder")}
+                    className="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400"
+                  />
+                </div>
+              </div>
+
+              {/* Nav Links */}
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block px-4 py-3 text-gray-700 font-medium hover:bg-gray-50 rounded-lg transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+
+              {/* About Sections */}
+              <div className="pt-2 pb-2 border-t border-gray-100 mt-2">
+                <p className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  {t("nav.about", "About IFIMES")}
+                </p>
+                {aboutSections.map((section) => (
+                  <button
+                    key={section.id}
+                    onClick={() => handleNavClick(section.id)}
+                    className="block w-full text-left px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    {section.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Get Involved CTA */}
+              <Link
+                href="/get-involved"
+                className="block w-full text-center px-4 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors mt-4"
+              >
+                {t("nav.getInvolved", "Get Involved")}
+              </Link>
+
+              {/* Language */}
+              <div className="pt-4 mt-4 border-t border-gray-100">
+                <p className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  {t("select_language")}
+                </p>
+                <div className="flex flex-wrap gap-2 px-4 pt-2">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.label}
+                      onClick={() => i18n.changeLanguage(lang.label)}
+                      className={cn(
+                        "flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-colors",
+                        currentLanguage === lang.label
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      )}
+                    >
+                      <span>{lang.flag}</span>
+                      {lang.native}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
