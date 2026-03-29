@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ARTICLE_PLACEHOLDER } from "@/lib/placeholder";
 
-const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "";
 
 interface EventItem {
   id: number;
@@ -21,7 +22,7 @@ interface EventItem {
 }
 
 const getImageUrl = (image: string | null): string => {
-  if (!image) return "/fallback.jpg";
+  if (!image) return ARTICLE_PLACEHOLDER;
   if (image.startsWith("data:image")) return image; // base64
   if (image.startsWith("http")) return image;
   return `${API_BASE}/uploads/${image}`;
@@ -154,15 +155,21 @@ export default function EventPage() {
                     className="block"
                   >
                     <div className="flex items-start space-x-4 bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow duration-200">
-                      {event.featuredImage && (
+                      {event.featuredImage ? (
                         <img
                           src={getImageUrl(event.featuredImage)}
                           alt={title}
                           className="w-28 h-28 object-cover rounded-md flex-shrink-0"
                           onError={(e) => {
-                            e.currentTarget.src = "/fallback.jpg";
+                            e.currentTarget.src = ARTICLE_PLACEHOLDER;
                           }}
                         />
+                      ) : (
+                        <div className="w-28 h-28 rounded-md flex-shrink-0 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                          <svg className="w-10 h-10 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                          </svg>
+                        </div>
                       )}
                       <div>
                         <p className="text-sm text-blue-600 font-semibold mb-1">
@@ -179,7 +186,7 @@ export default function EventPage() {
                         <h3 className="text-lg font-bold text-gray-900">
                           {title}
                         </h3>
-                        <p className="text-gray-700 mt-1">{content}</p>
+                        <p className="text-gray-700 mt-1 line-clamp-4">{content}</p>
                       </div>
                     </div>
                   </Link>

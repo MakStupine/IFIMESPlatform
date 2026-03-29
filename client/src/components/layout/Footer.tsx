@@ -17,111 +17,43 @@ export default function Footer() {
     <footer className="bg-gray-900 text-gray-300">
       {/* Main Footer */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
-          {/* Brand & Contact */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-6">
-              <h3 className="text-2xl font-bold text-white">{companyInfo.name}</h3>
-            </Link>
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              {companyInfo.fullName}
-            </p>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                <span className="text-sm">{companyInfo.address}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-blue-400 flex-shrink-0" />
-                <a href={`tel:${companyInfo.phone}`} className="text-sm hover:text-white transition-colors">
-                  {companyInfo.phone}
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-blue-400 flex-shrink-0" />
-                <a href={`mailto:${companyInfo.email}`} className="text-sm hover:text-white transition-colors">
-                  {companyInfo.email}
-                </a>
-              </div>
+        <div className="max-w-2xl mx-auto text-center">
+          {/* Brand */}
+          <Link href="/" className="inline-block mb-4">
+            <h3 className="text-2xl font-bold text-white">{companyInfo.name}</h3>
+          </Link>
+          <p className="text-gray-400 mb-8 leading-relaxed">
+            {companyInfo.fullName}
+          </p>
+
+          {/* Contact Info */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-blue-400 flex-shrink-0" />
+              <span className="text-sm">{companyInfo.address}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-blue-400 flex-shrink-0" />
+              <a href={`tel:${companyInfo.phone}`} className="text-sm hover:text-white transition-colors">
+                {companyInfo.phone}
+              </a>
+            </div>
+            <div className="flex items-center gap-2">
+              <Mail className="h-4 w-4 text-blue-400 flex-shrink-0" />
+              <a href={`mailto:${companyInfo.email}`} className="text-sm hover:text-white transition-colors">
+                {companyInfo.email}
+              </a>
             </div>
           </div>
 
-          {/* Research & Publications */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">{t("nav.research")}</h4>
-            <ul className="space-y-2.5">
-              <li>
-                <Link href="/research" className="text-sm hover:text-white transition-colors">
-                  {t("nav.research.all")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/research/papers" className="text-sm hover:text-white transition-colors">
-                  {t("nav.research.papers")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/research/policy-briefs" className="text-sm hover:text-white transition-colors">
-                  {t("nav.research.policyBriefs")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/press" className="text-sm hover:text-white transition-colors">
-                  {t("nav.media.press")}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Regional Focus */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">{t("nav.regions")}</h4>
-            <ul className="space-y-2.5">
-              {regionalFocus.map((region) => (
-                <li key={region.id}>
-                  <Link href={`/regions/${region.slug}`} className="text-sm hover:text-white transition-colors">
-                    {t(region.titleKey)}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/events" className="text-sm hover:text-white transition-colors">
-                  {t("nav.events")}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* About */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">{t("nav.about")}</h4>
-            <ul className="space-y-2.5">
-              <li>
-                <Link href="/about" className="text-sm hover:text-white transition-colors">
-                  {t("nav.about.mission")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/about/history" className="text-sm hover:text-white transition-colors">
-                  {t("nav.about.history")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/about/leadership" className="text-sm hover:text-white transition-colors">
-                  {t("nav.about.leadership")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/about/partners" className="text-sm hover:text-white transition-colors">
-                  {t("nav.about.partners")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/get-involved" className="text-sm hover:text-white transition-colors">
-                  {t("nav.getInvolved")}
-                </Link>
-              </li>
-            </ul>
+          {/* Quick Links */}
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+            <Link href="/research" className="hover:text-white transition-colors">{t("nav_research")}</Link>
+            <Link href="/press" className="hover:text-white transition-colors">{t("nav_press")}</Link>
+            <Link href="/events" className="hover:text-white transition-colors">{t("nav_events")}</Link>
+            <Link href="/media" className="hover:text-white transition-colors">{t("nav_media")}</Link>
+            <Link href="/about" className="hover:text-white transition-colors">{t("nav_about")}</Link>
+            <Link href="/get-involved" className="hover:text-white transition-colors">{t("nav_getintouch")}</Link>
           </div>
         </div>
       </div>

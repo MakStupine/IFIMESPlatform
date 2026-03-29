@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useLocation, Link } from "wouter";
 import { useTranslation } from "react-i18next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ARTICLE_PLACEHOLDER } from "@/lib/placeholder";
+import ArticleSkeleton from "@/components/ui/ArticleSkeleton";
 
 const ITEMS_PER_PAGE = 6;
-const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "";
 
 interface Article {
   id: number;
@@ -31,28 +33,67 @@ export default function PressPage() {
   const initialQuery = urlSearchParams.get("query") || "";
   const [currentPage, setCurrentPage] = useState(1);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [totalArticles, setTotalArticles] = useState(0);
   const [searchTerm, setSearchTerm] = useState(initialQuery);
   const [inputTerm, setInputTerm] = useState(initialQuery);
   const [loading, setLoading] = useState(false);
 
+  const fetchArticles = useCallback(
+    (page: number, search?: string) => {
+      setLoading(true);
+      const url = search
+        ? `${API_BASE}/api/articles/press`
+        : `${API_BASE}/api/articles/press?page=${page}&limit=${ITEMS_PER_PAGE}`;
+
+      fetch(url)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch press articles.");
+          return res.json();
+        })
+        .then((data) => {
+          if (search) {
+            const all = Array.isArray(data) ? data : (data.articles || []);
+            const filtered = all
+              .filter((item: Article) => {
+                const lang = i18n.language;
+                const title = item[`title_${lang}` as keyof Article] || item.title_en || "";
+                return (title as string).toLowerCase().includes(search.toLowerCase());
+              })
+              .sort((a: Article, b: Article) =>
+                new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+              );
+            setArticles(filtered.slice(0, ITEMS_PER_PAGE));
+            setTotalArticles(filtered.length);
+          } else {
+            if (Array.isArray(data)) {
+              // Backend not yet restarted — handle plain array
+              const sorted = data.sort((a: Article, b: Article) =>
+                new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+              );
+              const start = (page - 1) * ITEMS_PER_PAGE;
+              setArticles(sorted.slice(start, start + ITEMS_PER_PAGE));
+              setTotalArticles(sorted.length);
+            } else {
+              setArticles(data.articles);
+              setTotalArticles(data.total);
+            }
+          }
+        })
+        .catch((err) => {
+          console.error("❌ Failed to fetch press articles:", err);
+        })
+        .finally(() => setLoading(false));
+    },
+    [i18n.language]
+  );
+
   useEffect(() => {
-    fetch(`${API_BASE}/api/articles/press`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch press articles.");
-        return res.json();
-      })
-      .then((data) => {
-        const sorted = data.sort(
-          (a: Article, b: Article) =>
-            new Date(b.publishDate).getTime() -
-            new Date(a.publishDate).getTime()
-        );
-        setArticles(sorted);
-      })
-      .catch((err) => {
-        console.error("❌ Failed to fetch press articles:", err);
-      });
-  }, []);
+    if (searchTerm) {
+      fetchArticles(1, searchTerm);
+    } else {
+      fetchArticles(currentPage);
+    }
+  }, [currentPage, searchTerm, fetchArticles]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -70,36 +111,20 @@ export default function PressPage() {
   };
 
   const getImageUrl = (image: string | null): string => {
-    if (!image) return "/fallback.jpg";
+    if (!image) return ARTICLE_PLACEHOLDER;
     if (image.startsWith("data:image")) return image;
     if (image.startsWith("http")) return image;
-    return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${image}`;
+    return `${API_BASE}/uploads/${image}`;
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setLoading(true);
-      setTimeout(() => {
-        setSearchTerm(inputTerm);
-        setLoading(false);
-      }, 300);
+      setCurrentPage(1);
+      setSearchTerm(inputTerm);
     }
   };
 
-  const filteredArticles = articles.filter((item) =>
-    getLocalized(item).title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentArticles = filteredArticles.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
+  const totalPages = Math.ceil(totalArticles / ITEMS_PER_PAGE);
 
   const placeholderText =
     i18n.language === "bs"
@@ -117,7 +142,7 @@ export default function PressPage() {
             {t("press.title")}
           </h1>
 
-          {/* 🔍 Search Bar */}
+          {/* Search Bar */}
           <div className="mb-8 relative">
             <input
               type="text"
@@ -153,40 +178,40 @@ export default function PressPage() {
             )}
           </div>
 
-          {/* 📰 Articles List */}
+          {/* Articles List */}
+          {loading && articles.length === 0 ? (
+            <ArticleSkeleton count={ITEMS_PER_PAGE} />
+          ) : (
           <div className="space-y-10 min-h-[900px]">
-            {currentArticles.map((item) => {
+            {articles.map((item) => {
               const { title, content } = getLocalized(item);
-
               return (
                 <Link
                   key={item.slug}
                   to={`/press/${item.slug}`}
                   className="block"
                 >
-                  <div className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-200 min-h-[280px]">
+                  <div className="bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden transition-shadow duration-200 md:h-[260px]">
                     <div className="flex flex-col md:flex-row h-full">
-                      <div className="md:w-1/3 h-full">
+                      <div className="md:w-1/3 h-48 md:h-full">
                         <img
                           src={getImageUrl(item.featuredImage)}
                           alt={title}
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            e.currentTarget.src = "/fallback.jpg";
+                            e.currentTarget.src = ARTICLE_PLACEHOLDER;
                           }}
                         />
                       </div>
-                      <div className="md:w-2/3 p-6 flex flex-col justify-between min-h-[240px]">
+                      <div className="md:w-2/3 p-6 flex flex-col justify-between overflow-hidden">
                         <div>
                           <span className="text-sm text-primary-600 font-semibold">
-                            {new Date(item.publishDate).toLocaleDateString(
-                              "en-GB"
-                            )}
+                            {new Date(item.publishDate).toLocaleDateString("en-GB")}
                           </span>
-                          <h2 className="text-xl font-bold text-gray-900 mt-2">
+                          <h2 className="text-xl font-bold text-gray-900 mt-2 line-clamp-2">
                             {title}
                           </h2>
-                          <p className="text-gray-600 mt-2 line-clamp-3 leading-relaxed text-base">
+                          <p className="text-gray-600 mt-2 line-clamp-2 leading-relaxed text-base">
                             {content}
                           </p>
                         </div>
@@ -200,14 +225,15 @@ export default function PressPage() {
               );
             })}
 
-            {currentArticles.length === 0 && (
+            {articles.length === 0 && !loading && (
               <p className="text-gray-500 text-center">
                 {t("press.noResults") || "No articles found."}
               </p>
             )}
           </div>
+          )}
 
-          {/* 📄 Pagination */}
+          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center items-center mt-10 pb-20 gap-6 text-sm font-medium text-gray-600">
               <button
@@ -223,9 +249,7 @@ export default function PressPage() {
               </span>
 
               <button
-                onClick={() =>
-                  setCurrentPage((p) => Math.min(totalPages, p + 1))
-                }
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
                 className="px-5 py-2 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >

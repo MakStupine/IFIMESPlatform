@@ -4,9 +4,11 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { ARTICLE_PLACEHOLDER } from "@/lib/placeholder";
+import ArticleSkeleton from "@/components/ui/ArticleSkeleton";
 
 const ITEMS_PER_PAGE = 6;
-const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "";
 
 interface Article {
   id: number;
@@ -47,7 +49,7 @@ export default function EveryArticlePage() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [inputTerm, setInputTerm] = useState(initialQuery);
   const [searchTerm, setSearchTerm] = useState(initialQuery);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
@@ -64,7 +66,8 @@ export default function EveryArticlePage() {
       })
       .catch((err) => {
         console.error("❌ Failed to fetch articles:", err);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -77,7 +80,7 @@ export default function EveryArticlePage() {
   };
 
   const getImageUrl = (image: string | null): string => {
-    if (!image) return "/fallback.jpg";
+    if (!image) return ARTICLE_PLACEHOLDER;
     if (image.startsWith("data:image")) return image;
     if (image.startsWith("http")) return image;
     return `${import.meta.env.VITE_ADMIN_API_URL}/uploads/${image}`;
@@ -171,9 +174,12 @@ export default function EveryArticlePage() {
             )}
           </motion.div>
 
-          {/* 📄 Articles */}
+          {/* Articles */}
+          {loading ? (
+            <ArticleSkeleton count={ITEMS_PER_PAGE} />
+          ) : (
           <motion.div
-            className="space-y-10 min-h-[900px]" // Ensures space even for short lists
+            className="space-y-10 min-h-[900px]"
             key={i18n.language}
             variants={staggerContainer}
             initial="hidden"
@@ -196,7 +202,7 @@ export default function EveryArticlePage() {
                         alt={getLocalizedField(item, "title")}
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.currentTarget.src = "/fallback.jpg";
+                          e.currentTarget.src = ARTICLE_PLACEHOLDER;
                         }}
                       />
                     </div>
@@ -229,6 +235,7 @@ export default function EveryArticlePage() {
               </p>
             )}
           </motion.div>
+          )}
 
           {/* Pagination Controls */}
           {totalPages > 1 && (

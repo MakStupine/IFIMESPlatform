@@ -11,8 +11,9 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { ARTICLE_PLACEHOLDER } from "@/lib/placeholder";
 
-const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "http://localhost:5150";
+const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "";
 
 interface Article {
   id: number;
@@ -59,7 +60,7 @@ export default function TitleDescNewsletter() {
   const [shareCounts, setShareCounts] = useState<Record<string, number>>({});
 
   const getImageUrl = (image: string | null): string => {
-    if (!image) return "/fallback.jpg";
+    if (!image) return ARTICLE_PLACEHOLDER;
     if (image.startsWith("data:image")) return image;
     if (image.startsWith("http")) return image;
     return `${API_BASE}/uploads/${image}`;
@@ -83,49 +84,56 @@ export default function TitleDescNewsletter() {
 
     const dbTableName = category === "events" ? "event" : category;
 
-    fetch(`${API_BASE}/api/articles/${dbTableName}`)
+    // Fire ALL requests in parallel — article, shares, sidebar research, sidebar press
+    const articleReq = fetch(`${API_BASE}/api/articles/${dbTableName}/by-slug/${encodeURIComponent(slug)}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Not found");
+        return res.json();
+      })
+      .catch(() =>
+        // Fallback: search in paginated list
+        fetch(`${API_BASE}/api/articles/${dbTableName}?page=1&limit=50`)
+          .then((res) => res.json())
+          .then((data) => {
+            const list = Array.isArray(data) ? data : (data.articles || []);
+            return list.find((item: any) => item.slug === slug || item.slug?.startsWith(slug)) || null;
+          })
+      );
+
+    const sharesReq = fetch(`${API_BASE}/api/share/${slug}`)
       .then((res) => res.json())
-      .then((data) => {
-        const match = data.find((item: any) => item.slug === slug);
-        if (match) {
+      .catch(() => []);
+
+    const researchReq = fetch(`${API_BASE}/api/articles/research?page=1&limit=5`)
+      .then((res) => res.json())
+      .catch(() => []);
+
+    const pressReq = fetch(`${API_BASE}/api/articles/press?page=1&limit=5`)
+      .then((res) => res.json())
+      .catch(() => []);
+
+    Promise.all([articleReq, sharesReq, researchReq, pressReq]).then(
+      ([articleData, sharesData, researchData, pressData]) => {
+        if (articleData) {
           setArticle({
-            ...match,
-            createdAt: match.createdAt ?? match.created_at ?? "",
+            ...articleData,
+            createdAt: articleData.createdAt ?? articleData.created_at ?? "",
           });
         }
-      });
 
-    fetch(`${API_BASE}/api/share/${slug}`)
-      .then((res) => res.json())
-      .then((data) => {
         const counts: Record<string, number> = {};
-        data.forEach((entry: any) => {
+        (Array.isArray(sharesData) ? sharesData : []).forEach((entry: any) => {
           counts[entry.platform] = entry.count;
         });
         setShareCounts(counts);
-      });
-  }, [category, slug]);
 
-  useEffect(() => {
-    fetch(`${API_BASE}/api/articles/research`)
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = [...data].sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-        setLatestResearch(sorted.slice(0, 5));
-      });
+        const rArticles = Array.isArray(researchData) ? researchData.slice(0, 5) : (researchData.articles || []);
+        setLatestResearch(rArticles);
 
-    fetch(`${API_BASE}/api/articles/press`)
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = [...data].sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-        setLatestPress(sorted.slice(0, 5));
-      });
+        const pArticles = Array.isArray(pressData) ? pressData.slice(0, 5) : (pressData.articles || []);
+        setLatestPress(pArticles);
+      }
+    );
   }, []);
 
   const handleShareClick = (platform: string, url: string) => {
@@ -171,46 +179,43 @@ export default function TitleDescNewsletter() {
       <main className="flex-grow mt-32 py-24 px-4 sm:px-10 lg:px-16 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
           <motion.div
-            className="hidden lg:flex lg:col-span-1 flex-col items-center text-sm text-gray-500 sticky top-32 gap-6"
+            className="hidden lg:flex lg:col-span-1 flex-col items-center sticky top-32 gap-5"
             initial="hidden"
             animate="visible"
             variants={stagger}
           >
-            <motion.div
-              variants={fadeIn}
-              className="flex flex-col items-center gap-2"
-            >
+            {/* Author & Date */}
+            <motion.div variants={fadeIn} className="flex flex-col items-center gap-1.5 text-center">
               {article.author && (
-                <div className="text-center font-semibold text-gray-700">
+                <span className="text-xs font-semibold text-gray-800 bg-gray-100 px-3 py-1 rounded-full">
                   {article.author}
-                </div>
+                </span>
               )}
-              <div>
-                <div>
-                  {article.createdAt &&
-                    new Date(
-                      article.createdAt.replace(" ", "T")
-                    ).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })}
-                </div>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                <div className="text-lg font-bold text-black">
-                  {totalShares}
-                </div>
-                <div className="uppercase text-xs tracking-wide">
-                  {t("article.totalShares")}
-                </div>
-              </div>
+              {article.publishDate && !isNaN(new Date(article.publishDate.replace(" ", "T")).getTime()) && (
+                <span className="text-xs text-gray-400">
+                  {new Date(article.publishDate.replace(" ", "T")).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </span>
+              )}
             </motion.div>
 
-            <motion.div
-              className="flex flex-col gap-4 items-center text-xl"
-              variants={stagger}
-            >
+            {/* Divider */}
+            <div className="w-8 h-px bg-gray-200" />
+
+            {/* Share Count */}
+            <motion.div variants={fadeIn} className="flex flex-col items-center">
+              <span className="text-2xl font-bold text-gray-900">{totalShares}</span>
+              <span className="text-[10px] uppercase tracking-widest text-gray-400 font-medium">shares</span>
+            </motion.div>
+
+            {/* Divider */}
+            <div className="w-8 h-px bg-gray-200" />
+
+            {/* Share Buttons */}
+            <motion.div className="flex flex-col gap-2.5 items-center" variants={stagger}>
               {["facebook", "twitter", "email", "viber", "whatsapp"].map(
                 (platform, idx) => {
                   const icons = [
@@ -220,12 +225,12 @@ export default function TitleDescNewsletter() {
                     <FaViber />,
                     <FaWhatsapp />,
                   ];
-                  const colors = [
-                    "text-blue-600 hover:text-blue-800",
-                    "text-sky-500 hover:text-sky-700",
-                    "text-gray-600 hover:text-gray-800",
-                    "text-purple-600 hover:text-purple-800",
-                    "text-green-600 hover:text-green-800",
+                  const bgColors = [
+                    "bg-blue-50 text-blue-600 hover:bg-blue-100",
+                    "bg-sky-50 text-sky-500 hover:bg-sky-100",
+                    "bg-gray-50 text-gray-500 hover:bg-gray-100",
+                    "bg-purple-50 text-purple-600 hover:bg-purple-100",
+                    "bg-green-50 text-green-600 hover:bg-green-100",
                   ];
                   const urls = [
                     `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`,
@@ -239,8 +244,10 @@ export default function TitleDescNewsletter() {
                     <motion.button
                       key={platform}
                       onClick={() => handleShareClick(platform, urls[idx])}
-                      className={colors[idx]}
+                      className={`w-9 h-9 rounded-full flex items-center justify-center text-sm transition-colors ${bgColors[idx]}`}
                       variants={fadeIn}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       {icons[idx]}
                     </motion.button>
@@ -264,7 +271,7 @@ export default function TitleDescNewsletter() {
               alt={title}
               className="w-full h-[400px] object-cover rounded-lg shadow-md mb-10"
               onError={(e) => {
-                e.currentTarget.src = "/fallback.jpg";
+                e.currentTarget.src = ARTICLE_PLACEHOLDER;
               }}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -310,32 +317,34 @@ export default function TitleDescNewsletter() {
                     return (
                       <motion.li
                         key={item.id}
-                        className="flex items-start gap-4"
+                        className="flex items-center gap-3 h-[72px]"
                         variants={fadeIn}
                         whileHover={{ scale: 1.02 }}
                       >
                         <img
                           src={getImageUrl(item.featuredImage)}
                           alt={title}
-                          className="w-16 h-16 object-cover rounded-md border border-gray-200"
+                          className="w-14 h-14 object-cover rounded-md border border-gray-200 flex-shrink-0"
                           onError={(e) => {
-                            e.currentTarget.src = "/fallback.jpg";
+                            e.currentTarget.src = ARTICLE_PLACEHOLDER;
                           }}
                         />
                         <div>
                           <div className="text-xs text-gray-500 mb-1">
-                            {item.createdAt &&
-                              new Date(
-                                item.createdAt.replace(" ", "T")
-                              ).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                              })}
+                            {(item.publishDate || item.createdAt) &&
+                              (() => {
+                                const raw = item.publishDate || item.createdAt || "";
+                                const d = new Date(raw.replace(" ", "T"));
+                                return isNaN(d.getTime()) ? "" : d.toLocaleDateString("en-GB", {
+                                  day: "2-digit",
+                                  month: "2-digit",
+                                  year: "numeric",
+                                });
+                              })()}
                           </div>
                           <a
                             href={`/${section.path}/${item.slug}`}
-                            className="text-sm font-semibold text-blue-900 hover:underline"
+                            className="text-sm font-semibold text-blue-900 hover:underline line-clamp-2"
                           >
                             {title}
                           </a>

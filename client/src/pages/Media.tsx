@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useTranslation } from "react-i18next";
 import {
-  Newspaper,
-  Video,
   Radio,
   Mail,
   ArrowRight,
-  Calendar,
   ExternalLink,
   Play,
   Facebook,
@@ -20,120 +16,52 @@ import {
   Youtube,
 } from "lucide-react";
 
-interface Article {
-  id: number;
-  slug: string;
-  category: string;
-  title_en: string;
-  title_bs: string;
-  title_sl: string;
-  content_en: string;
-  publishDate: string;
-  featuredImage: string | null;
+interface YouTubeVideo {
+  id: string;
+  title: string;
 }
 
 export default function MediaPage() {
   const { t, i18n } = useTranslation();
-  const [activeTab, setActiveTab] = useState<"press" | "news" | "video">("press");
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [loadingVideos, setLoadingVideos] = useState(true);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // Fetch press releases
-  const { data: pressReleases } = useQuery<Article[]>({
-    queryKey: ["press-releases"],
-    queryFn: async () => {
-      const response = await fetch("/api/articles/press");
-      if (!response.ok) throw new Error("Failed to fetch");
-      return response.json();
-    },
-  });
-
-  // Fetch news/media articles
-  const { data: newsArticles } = useQuery<Article[]>({
-    queryKey: ["news-articles"],
-    queryFn: async () => {
-      const response = await fetch("/api/articles/media");
-      if (!response.ok) throw new Error("Failed to fetch");
-      return response.json();
-    },
-  });
-
-  const getLocalizedTitle = (article: Article) => {
-    const lang = i18n.language;
-    if (lang === "bs") return article.title_bs || article.title_en;
-    if (lang === "sl") return article.title_sl || article.title_en;
-    return article.title_en;
-  };
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
+  // Fetch latest 4 videos from YouTube channel via scraping the page
+  useEffect(() => {
+    async function fetchVideos() {
+      try {
+        const res = await fetch("/api/youtube/latest");
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        setVideos(data.videos.slice(0, 4));
+      } catch {
+        // Fallback to known videos if API fails
+        setVideos([
+          { id: "_y6wyFaQTC0", title: "New challenges for Albania, region, Europe and the world — Lecture by H.E. Ilir Meta" },
+          { id: "FfsXxQsrozU", title: "THE ESTABLISHMENT OF A NEW WORLD ORDER — Lecture by Blagoje Grahovac" },
+          { id: "Ig7OD6jYs0k", title: "Dr. Mirko Pejanović: The Statehood of Bosnia and Herzegovina in the 20th and 21st Centuries" },
+          { id: "DW6K0DNkAbs", title: "Ceremonija svečane dodjele priznanja za životno djelo akademiku prof. dr. Mirku Pejanoviću" },
+        ]);
+      } finally {
+        setLoadingVideos(false);
+      }
     }
-  };
+    fetchVideos();
+  }, []);
 
   const socialLinks = [
-    {
-      name: "Facebook",
-      icon: Facebook,
-      href: "https://www.facebook.com/Ifimes/",
-      color: "bg-blue-600 hover:bg-blue-700",
-      followers: "12K+",
-    },
-    {
-      name: "Twitter / X",
-      icon: Twitter,
-      href: "https://x.com/ifimes",
-      color: "bg-gray-900 hover:bg-black",
-      followers: "8K+",
-    },
-    {
-      name: "LinkedIn",
-      icon: Linkedin,
-      href: "https://www.linkedin.com/in/ifimes-institute-232694138",
-      color: "bg-blue-700 hover:bg-blue-800",
-      followers: "5K+",
-    },
-    {
-      name: "YouTube",
-      icon: Youtube,
-      href: "https://www.youtube.com/user/Ifimes",
-      color: "bg-red-600 hover:bg-red-700",
-      followers: "3K+",
-    },
+    { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/Ifimes/", color: "bg-blue-600 hover:bg-blue-700", followers: "12K+" },
+    { name: "Twitter / X", icon: Twitter, href: "https://x.com/ifimes", color: "bg-gray-900 hover:bg-black", followers: "8K+" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/ifimes-institute-232694138", color: "bg-blue-700 hover:bg-blue-800", followers: "5K+" },
+    { name: "YouTube", icon: Youtube, href: "https://www.youtube.com/@Ifimes", color: "bg-red-600 hover:bg-red-700", followers: "3K+" },
   ];
 
-  const featuredVideos = [
-    {
-      id: 1,
-      title: "IFIMES International Conference 2024",
-      embedId: "_y6wyFaQTC0",
-      date: "2024-10-15",
-    },
-    {
-      id: 2,
-      title: "Balkans Security Summit",
-      embedId: "_y6wyFaQTC0",
-      date: "2024-09-20",
-    },
-    {
-      id: 3,
-      title: "Middle East Analysis Forum",
-      embedId: "_y6wyFaQTC0",
-      date: "2024-08-10",
-    },
-  ];
-
-  const tabs = [
-    { id: "press", label: t("nav.media.press", "Press Releases"), icon: Newspaper },
-    { id: "news", label: t("nav.media.news", "News & Updates"), icon: Radio },
-    { id: "video", label: t("nav.media.video", "Video & Multimedia"), icon: Video },
-  ];
+  const featuredVideo = videos[0];
+  const moreVideos = videos.slice(1);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -193,176 +121,56 @@ export default function MediaPage() {
           </div>
         </section>
 
-        {/* Content Tabs Section */}
+        {/* Video & Multimedia Section */}
         <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Tabs */}
-            <div className="flex flex-wrap justify-center gap-2 mb-12">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all ${
-                    activeTab === tab.id
-                      ? "bg-blue-600 text-white shadow-lg"
-                      : "bg-white text-gray-600 hover:bg-gray-100"
-                  }`}
-                >
-                  <tab.icon className="h-5 w-5" />
-                  {tab.label}
-                </button>
-              ))}
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 mb-2 flex items-center justify-center gap-3">
+                <Play className="h-7 w-7 text-blue-600" />
+                Video & Multimedia
+              </h2>
+              <p className="text-gray-600">Latest videos from the IFIMES YouTube channel</p>
             </div>
 
-            {/* Press Releases Tab */}
-            {activeTab === "press" && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {pressReleases && pressReleases.length > 0 ? (
-                    pressReleases.slice(0, 9).map((article) => (
-                      <Link key={article.id} href={`/press/${article.slug}`}>
-                        <div className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
-                          {article.featuredImage && (
-                            <div className="aspect-video overflow-hidden">
-                              <img
-                                src={article.featuredImage}
-                                alt={getLocalizedTitle(article)}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              />
-                            </div>
-                          )}
-                          <div className="p-6">
-                            <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                              <Calendar className="h-4 w-4" />
-                              {new Date(article.publishDate).toLocaleDateString(i18n.language, {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })}
-                            </div>
-                            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-                              {getLocalizedTitle(article)}
-                            </h3>
-                            <div className="mt-4 flex items-center text-blue-600 font-medium">
-                              <span>Read more</span>
-                              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="col-span-full text-center py-12">
-                      <Newspaper className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                      <p className="text-gray-500">No press releases available.</p>
+            {loadingVideos ? (
+              <div className="flex justify-center py-20">
+                <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              <>
+                {/* Featured Video (latest) */}
+                {featuredVideo && (
+                  <div className="max-w-4xl mx-auto mb-12">
+                    <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src={`https://www.youtube.com/embed/${featuredVideo.id}`}
+                        title={featuredVideo.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full"
+                      />
                     </div>
-                  )}
-                </div>
-                {pressReleases && pressReleases.length > 9 && (
-                  <div className="text-center mt-8">
-                    <Link
-                      href="/press"
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      View All Press Releases
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    <p className="mt-3 text-gray-700 font-medium text-center">
+                      {featuredVideo.title}
+                    </p>
                   </div>
                 )}
-              </motion.div>
-            )}
 
-            {/* News Tab */}
-            {activeTab === "news" && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {newsArticles && newsArticles.length > 0 ? (
-                    newsArticles.slice(0, 9).map((article) => (
-                      <Link key={article.id} href={`/media/${article.slug}`}>
-                        <div className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full">
-                          {article.featuredImage && (
-                            <div className="aspect-video overflow-hidden">
-                              <img
-                                src={article.featuredImage}
-                                alt={getLocalizedTitle(article)}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              />
-                            </div>
-                          )}
-                          <div className="p-6">
-                            <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                              <Calendar className="h-4 w-4" />
-                              {new Date(article.publishDate).toLocaleDateString(i18n.language, {
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                              })}
-                            </div>
-                            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-                              {getLocalizedTitle(article)}
-                            </h3>
-                            <div className="mt-4 flex items-center text-blue-600 font-medium">
-                              <span>Read more</span>
-                              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    ))
-                  ) : (
-                    <div className="col-span-full text-center py-12">
-                      <Radio className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                      <p className="text-gray-500">No news articles available.</p>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            )}
-
-            {/* Video Tab */}
-            {activeTab === "video" && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Featured Video */}
-                <div className="max-w-4xl mx-auto mb-12">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                    <Play className="h-5 w-5 text-blue-600" />
-                    Featured Video
-                  </h3>
-                  <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src="https://www.youtube.com/embed/_y6wyFaQTC0"
-                      title="IFIMES Featured Video"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                    />
-                  </div>
-                </div>
-
-                {/* More Videos */}
-                <div className="grid md:grid-cols-3 gap-6">
-                  {featuredVideos.map((video) => (
-                    <div
+                {/* More Videos (next 3) */}
+                <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                  {moreVideos.map((video) => (
+                    <a
                       key={video.id}
+                      href={`https://www.youtube.com/watch?v=${video.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all"
                     >
                       <div className="relative aspect-video">
                         <img
-                          src={`https://img.youtube.com/vi/${video.embedId}/maxresdefault.jpg`}
+                          src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
                           alt={video.title}
                           className="w-full h-full object-cover"
                         />
@@ -373,25 +181,18 @@ export default function MediaPage() {
                         </div>
                       </div>
                       <div className="p-4">
-                        <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                           {video.title}
                         </h4>
-                        <p className="text-sm text-gray-500 mt-1">
-                          {new Date(video.date).toLocaleDateString(i18n.language, {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          })}
-                        </p>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
 
                 {/* YouTube Channel Link */}
                 <div className="text-center mt-8">
                   <a
-                    href="https://www.youtube.com/user/Ifimes"
+                    href="https://www.youtube.com/@Ifimes"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
@@ -401,46 +202,8 @@ export default function MediaPage() {
                     <ExternalLink className="h-4 w-4" />
                   </a>
                 </div>
-              </motion.div>
+              </>
             )}
-          </div>
-        </section>
-
-        {/* Newsletter Section */}
-        <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto text-center">
-              <Mail className="h-12 w-12 mx-auto mb-4 opacity-80" />
-              <h2 className="text-3xl font-bold mb-4">
-                {t("newsletter.title", "Subscribe to Our Newsletter")}
-              </h2>
-              <p className="text-blue-100 mb-8">
-                {t("newsletter.subtitle", "Get the latest research, analysis, and updates delivered to your inbox.")}
-              </p>
-              {subscribed ? (
-                <div className="bg-white/10 rounded-lg p-6">
-                  <p className="text-lg font-medium">Thank you for subscribing!</p>
-                  <p className="text-blue-100 mt-2">You'll receive our next newsletter soon.</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t("newsletter.placeholder", "Enter your email")}
-                    required
-                    className="flex-1 px-5 py-4 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/50"
-                  />
-                  <button
-                    type="submit"
-                    className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors"
-                  >
-                    {t("newsletter.button", "Subscribe")}
-                  </button>
-                </form>
-              )}
-            </div>
           </div>
         </section>
 
@@ -454,11 +217,11 @@ export default function MediaPage() {
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
-                  href="mailto:press@ifimes.org"
+                  href="mailto:ifimes@ifimes.org"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
                 >
                   <Mail className="h-5 w-5" />
-                  press@ifimes.org
+                  ifimes@ifimes.org
                 </a>
                 <Link
                   href="/get-involved"
