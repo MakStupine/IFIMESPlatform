@@ -48,7 +48,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-8"
+            className="mb-8 mt-12"
           >
             <span className="inline-flex items-center gap-2 py-2 px-4 bg-white/10 backdrop-blur-md text-white text-sm font-medium rounded-full border border-white/20">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />

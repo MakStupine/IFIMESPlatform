@@ -21,6 +21,14 @@ interface EventItem {
   content_sl: string;
 }
 
+const stripHtml = (html: string) => (html || "").replace(/<[^>]*>/g, "").trim();
+const formatDate = (dateStr: string | Date) => {
+  if (!dateStr) return "";
+  const d = new Date(String(dateStr).replace(" ", "T"));
+  if (isNaN(d.getTime())) return "";
+  return `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+};
+
 const getImageUrl = (image: string | null): string => {
   if (!image) return ARTICLE_PLACEHOLDER;
   if (image.startsWith("data:image")) return image; // base64
@@ -173,20 +181,12 @@ export default function EventPage() {
                       )}
                       <div>
                         <p className="text-sm text-blue-600 font-semibold mb-1">
-                          {event.eventDate &&
-                            new Date(event.eventDate).toLocaleDateString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "2-digit",
-                                year: "numeric",
-                              }
-                            )}
+                          {formatDate(event.eventDate)}
                         </p>
                         <h3 className="text-lg font-bold text-gray-900">
                           {title}
                         </h3>
-                        <p className="text-gray-700 mt-1 line-clamp-4">{content}</p>
+                        <p className="text-gray-700 mt-1 line-clamp-4">{stripHtml(content)}</p>
                       </div>
                     </div>
                   </Link>

@@ -9,6 +9,14 @@ import ArticleSkeleton from "@/components/ui/ArticleSkeleton";
 const ITEMS_PER_PAGE = 6;
 const API_BASE = import.meta.env.VITE_ADMIN_API_URL || "";
 
+const stripHtml = (html: string) => (html || "").replace(/<[^>]*>/g, "").trim();
+const formatDate = (dateStr: string) => {
+  if (!dateStr) return "";
+  const d = new Date(dateStr.replace(" ", "T"));
+  if (isNaN(d.getTime())) return "";
+  return `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+};
+
 interface Article {
   id: number;
   slug: string;
@@ -206,13 +214,13 @@ export default function PressPage() {
                       <div className="md:w-2/3 p-6 flex flex-col justify-between overflow-hidden">
                         <div>
                           <span className="text-sm text-primary-600 font-semibold">
-                            {new Date(item.publishDate).toLocaleDateString("en-GB")}
+                            {formatDate(item.publishDate)}
                           </span>
                           <h2 className="text-xl font-bold text-gray-900 mt-2 line-clamp-2">
                             {title}
                           </h2>
                           <p className="text-gray-600 mt-2 line-clamp-2 leading-relaxed text-base">
-                            {content}
+                            {stripHtml(content)}
                           </p>
                         </div>
                         <span className="text-primary-600 font-medium mt-4 inline-block">

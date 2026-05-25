@@ -32,6 +32,14 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
+const stripHtml = (html: string) => (html || "").replace(/<[^>]*>/g, "").trim();
+const formatDate = (dateStr: string) => {
+  if (!dateStr) return "";
+  const d = new Date(dateStr.replace(" ", "T"));
+  if (isNaN(d.getTime())) return "";
+  return `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+};
+
 const staggerContainer = {
   visible: {
     transition: {
@@ -228,15 +236,13 @@ export default function ResearchPage() {
                     <div className="md:w-2/3 p-6 flex flex-col justify-between overflow-hidden">
                       <div>
                         <span className="text-sm text-primary-600 font-semibold">
-                          {new Date(item.publishDate).toLocaleDateString(
-                            "en-GB"
-                          )}
+                          {formatDate(item.publishDate)}
                         </span>
                         <h2 className="text-xl font-bold text-gray-900 mt-2 line-clamp-2">
                           {getLocalizedField(item, "title")}
                         </h2>
                         <p className="text-gray-600 mt-2 line-clamp-2 leading-relaxed text-base">
-                          {getLocalizedField(item, "content")}
+                          {stripHtml(getLocalizedField(item, "content") || "")}
                         </p>
                       </div>
                       <span className="text-primary-600 font-medium mt-4 inline-block">

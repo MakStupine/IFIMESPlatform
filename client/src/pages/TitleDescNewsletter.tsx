@@ -35,6 +35,13 @@ const fadeIn = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
+const formatDate = (dateStr: string) => {
+  if (!dateStr) return "";
+  const d = new Date(dateStr.replace(" ", "T"));
+  if (isNaN(d.getTime())) return "";
+  return `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
+};
+
 const stagger = {
   hidden: {},
   visible: {
@@ -191,13 +198,9 @@ export default function TitleDescNewsletter() {
                   {article.author}
                 </span>
               )}
-              {article.publishDate && !isNaN(new Date(article.publishDate.replace(" ", "T")).getTime()) && (
+              {article.publishDate && (
                 <span className="text-xs text-gray-400">
-                  {new Date(article.publishDate.replace(" ", "T")).toLocaleDateString("en-GB", {
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                  })}
+                  {formatDate(article.publishDate)}
                 </span>
               )}
             </motion.div>
@@ -278,11 +281,10 @@ export default function TitleDescNewsletter() {
               transition={{ duration: 0.6 }}
             />
             <motion.article
-              className="text-gray-700 text-lg leading-relaxed space-y-6"
+              className="text-gray-700 text-lg leading-relaxed space-y-6 prose prose-lg max-w-none"
               variants={fadeIn}
-            >
-              <p>{content}</p>
-            </motion.article>
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
           </motion.div>
 
           <motion.div
@@ -311,7 +313,7 @@ export default function TitleDescNewsletter() {
                 <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">
                   {section.title}
                 </h2>
-                <motion.ul className="space-y-4" variants={stagger}>
+                <motion.ul className="space-y-4" variants={stagger} initial="hidden" animate="visible">
                   {section.data.map((item) => {
                     const { title } = getLocalized(item);
                     return (
@@ -334,12 +336,7 @@ export default function TitleDescNewsletter() {
                             {(item.publishDate || item.createdAt) &&
                               (() => {
                                 const raw = item.publishDate || item.createdAt || "";
-                                const d = new Date(raw.replace(" ", "T"));
-                                return isNaN(d.getTime()) ? "" : d.toLocaleDateString("en-GB", {
-                                  day: "2-digit",
-                                  month: "2-digit",
-                                  year: "numeric",
-                                });
+                                return formatDate(raw);
                               })()}
                           </div>
                           <a
