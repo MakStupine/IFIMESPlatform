@@ -32,7 +32,11 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
-const stripHtml = (html: string) => (html || "").replace(/<[^>]*>/g, "").trim();
+const stripHtml = (html: string): string => {
+  if (!html) return "";
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+};
 const formatDate = (dateStr: string) => {
   if (!dateStr) return "";
   const d = new Date(dateStr.replace(" ", "T"));
