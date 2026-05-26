@@ -20,6 +20,7 @@ interface Article {
   slug: string;
   author?: string;
   publishDate: string;
+  eventDate?: string;
   createdAt: string;
   featuredImage: string | null;
   title_en: string;
@@ -198,9 +199,9 @@ export default function TitleDescNewsletter() {
                   {article.author}
                 </span>
               )}
-              {article.publishDate && (
+              {(article.eventDate || article.publishDate) && (
                 <span className="text-xs text-gray-400">
-                  {formatDate(article.publishDate)}
+                  {formatDate(article.eventDate || article.publishDate)}
                 </span>
               )}
             </motion.div>
