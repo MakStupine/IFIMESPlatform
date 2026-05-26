@@ -21,10 +21,14 @@ interface EventItem {
   content_sl: string;
 }
 
-const stripHtml = (html: string) => (html || "").replace(/<[^>]*>/g, "").trim();
+const stripHtml = (html: string): string => {
+  if (!html) return "";
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+};
 const formatDate = (dateStr: string | Date) => {
   if (!dateStr) return "";
-  const d = new Date(String(dateStr).replace(" ", "T"));
+  const d = dateStr instanceof Date ? dateStr : new Date(String(dateStr).replace(" ", "T"));
   if (isNaN(d.getTime())) return "";
   return `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
 };
