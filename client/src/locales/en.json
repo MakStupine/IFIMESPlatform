@@ -375,6 +375,7 @@
     "subscribe": "Subscribe",
     "subscribing": "Subscribing...",
     "success": "Thank you for subscribing!",
+    "alreadySubscribed": "This email is already subscribed.",
     "error": "Subscription failed. Please try again."
   },
 

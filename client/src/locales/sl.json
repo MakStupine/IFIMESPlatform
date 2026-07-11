@@ -359,6 +359,7 @@
     "subscribe": "Naroči se",
     "subscribing": "Naročanje...",
     "success": "Hvala za naročilo!",
+    "alreadySubscribed": "Ta e-poštni naslov je že naročen.",
     "error": "Naročnina ni uspela. Poskusite znova."
   },
 

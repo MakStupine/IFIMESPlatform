@@ -359,6 +359,7 @@
     "subscribe": "Pretplati se",
     "subscribing": "Pretplata u toku...",
     "success": "Hvala vam na pretplati!",
+    "alreadySubscribed": "Ovaj email je već pretplaćen.",
     "error": "Pretplata nije uspjela. Molimo pokušajte ponovo."
   },
 

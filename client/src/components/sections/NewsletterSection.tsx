@@ -3,10 +3,14 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Mail, Send, CheckCircle, AlertCircle } from "lucide-react";
 
+const API_BASE_URL = import.meta.env.VITE_ADMIN_API_URL || "";
+
 export default function NewsletterSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error" | "already"
+  >("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,28 +18,43 @@ export default function NewsletterSection() {
 
     setStatus("loading");
 
+    // Backend accepts only "en" | "bs" | "sl"; fall back to "en".
+    const lang = ["en", "bs", "sl"].includes(i18n.language)
+      ? i18n.language
+      : "en";
+
     try {
-      const response = await fetch("/api/mailchimp/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          name: "Newsletter",
-          surname: "Subscriber",
-          language: "en",
-        }),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/api/mailchimp/contact`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email.trim(),
+            name: "Newsletter",
+            surname: "Subscriber",
+            language: lang,
+          }),
+        }
+      );
 
       if (response.ok) {
         setStatus("success");
         setEmail("");
         setTimeout(() => setStatus("idle"), 5000);
+        return;
+      }
+
+      // Distinguish "already subscribed" from a real failure.
+      const body = await response.json().catch(() => null);
+      if (body?.messageCode === "already_subscribed") {
+        setStatus("already");
       } else {
         setStatus("error");
-        setTimeout(() => setStatus("idle"), 5000);
       }
+      setTimeout(() => setStatus("idle"), 5000);
     } catch {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
@@ -132,6 +151,16 @@ export default function NewsletterSection() {
             >
               <CheckCircle className="h-5 w-5" />
               {t("newsletter.success")}
+            </motion.div>
+          )}
+          {status === "already" && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 flex items-center justify-center gap-2 text-yellow-100"
+            >
+              <AlertCircle className="h-5 w-5" />
+              {t("newsletter.alreadySubscribed")}
             </motion.div>
           )}
           {status === "error" && (
