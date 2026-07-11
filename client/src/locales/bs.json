@@ -360,6 +360,8 @@
     "subscribing": "Pretplata u toku...",
     "success": "Hvala vam na pretplati!",
     "alreadySubscribed": "Ovaj email je već pretplaćen.",
+    "forgottenEmail": "Ovaj email je ranije uklonjen i ne može se automatski ponovo pretplatiti. Kontaktirajte nas ako se želite ponovo prijaviti.",
+    "invalidEmail": "Molimo unesite ispravnu email adresu.",
     "error": "Pretplata nije uspjela. Molimo pokušajte ponovo."
   },
 

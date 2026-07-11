@@ -360,6 +360,8 @@
     "subscribing": "Naročanje...",
     "success": "Hvala za naročilo!",
     "alreadySubscribed": "Ta e-poštni naslov je že naročen.",
+    "forgottenEmail": "Ta e-poštni naslov je bil predhodno odstranjen in ga ni mogoče samodejno znova naročiti. Kontaktirajte nas, če se želite znova prijaviti.",
+    "invalidEmail": "Vnesite veljaven e-poštni naslov.",
     "error": "Naročnina ni uspela. Poskusite znova."
   },
 

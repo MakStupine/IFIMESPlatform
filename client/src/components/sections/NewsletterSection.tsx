@@ -9,8 +9,10 @@ export default function NewsletterSection() {
   const { t, i18n } = useTranslation();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error" | "already"
+    "idle" | "loading" | "success" | "error" | "notice"
   >("idle");
+  // Translation key for the "notice" (yellow) state, e.g. already subscribed.
+  const [noticeKey, setNoticeKey] = useState("newsletter.error");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,14 +49,21 @@ export default function NewsletterSection() {
         return;
       }
 
-      // Distinguish "already subscribed" from a real failure.
+      // Map known backend messageCodes to a specific notice; otherwise error.
       const body = await response.json().catch(() => null);
-      if (body?.messageCode === "already_subscribed") {
-        setStatus("already");
+      const noticeByCode: Record<string, string> = {
+        already_subscribed: "newsletter.alreadySubscribed",
+        forgotten_email: "newsletter.forgottenEmail",
+        invalid_email: "newsletter.invalidEmail",
+      };
+      const key = noticeByCode[body?.messageCode];
+      if (key) {
+        setNoticeKey(key);
+        setStatus("notice");
       } else {
         setStatus("error");
       }
-      setTimeout(() => setStatus("idle"), 5000);
+      setTimeout(() => setStatus("idle"), 6000);
     } catch {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
@@ -153,14 +162,14 @@ export default function NewsletterSection() {
               {t("newsletter.success")}
             </motion.div>
           )}
-          {status === "already" && (
+          {status === "notice" && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-4 flex items-center justify-center gap-2 text-yellow-100"
             >
               <AlertCircle className="h-5 w-5" />
-              {t("newsletter.alreadySubscribed")}
+              {t(noticeKey)}
             </motion.div>
           )}
           {status === "error" && (

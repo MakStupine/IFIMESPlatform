@@ -376,6 +376,8 @@
     "subscribing": "Subscribing...",
     "success": "Thank you for subscribing!",
     "alreadySubscribed": "This email is already subscribed.",
+    "forgottenEmail": "This email was previously removed and can't be re-subscribed automatically. Please contact us if you'd like to rejoin.",
+    "invalidEmail": "Please enter a valid email address.",
     "error": "Subscription failed. Please try again."
   },
 
