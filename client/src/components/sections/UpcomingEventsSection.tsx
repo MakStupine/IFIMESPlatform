@@ -23,7 +23,7 @@ export default function UpcomingEventsSection() {
   const { data: events, isLoading } = useQuery<Event[]>({
     queryKey: ["upcoming-events"],
     queryFn: async () => {
-      const response = await fetch("/api/articles/event");
+      const response = await fetch(`${import.meta.env.VITE_ADMIN_API_URL || ""}/api/articles/event`);
       if (!response.ok) throw new Error("Failed to fetch events");
       const data = await response.json();
       // Filter for future events and sort by date
@@ -45,7 +45,7 @@ export default function UpcomingEventsSection() {
   };
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+    const date = new Date(String(dateString).replace(" ", "T"));
     return {
       day: date.getDate(),
       month: date.toLocaleDateString(i18n.language, { month: "short" }),

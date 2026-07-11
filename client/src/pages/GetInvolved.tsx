@@ -36,14 +36,17 @@ export default function GetInvolved() {
     setError("");
 
     try {
-      const res = await fetch("/api/contact/get-involved", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_ADMIN_API_URL || ""}/api/contact/get-involved`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!res.ok) {
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         throw new Error(data.error || "Failed to send message");
       }
 

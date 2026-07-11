@@ -31,7 +31,7 @@ export default function RegionDetail() {
   const { data: researchArticles } = useQuery<Article[]>({
     queryKey: ["region-research", regionSlug],
     queryFn: async () => {
-      const response = await fetch("/api/articles/research");
+      const response = await fetch(`${import.meta.env.VITE_ADMIN_API_URL || ""}/api/articles/research`);
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
       // Filter articles that might relate to this region (simple keyword matching)
@@ -53,7 +53,7 @@ export default function RegionDetail() {
   const { data: events } = useQuery<Article[]>({
     queryKey: ["region-events", regionSlug],
     queryFn: async () => {
-      const response = await fetch("/api/articles/event");
+      const response = await fetch(`${import.meta.env.VITE_ADMIN_API_URL || ""}/api/articles/event`);
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
       // Filter events that might relate to this region
@@ -222,7 +222,7 @@ export default function RegionDetail() {
                           {getLocalizedTitle(article)}
                         </h3>
                         <p className="text-sm text-gray-500 mt-2">
-                          {new Date(article.publishDate).toLocaleDateString(i18n.language, {
+                          {new Date(article.publishDate.replace(" ", "T")).toLocaleDateString(i18n.language, {
                             year: "numeric",
                             month: "long",
                             day: "numeric",
@@ -277,7 +277,7 @@ export default function RegionDetail() {
                         {getLocalizedTitle(event)}
                       </h3>
                       <p className="text-sm text-gray-500 mt-2">
-                        {new Date(event.publishDate).toLocaleDateString(i18n.language, {
+                        {new Date(event.publishDate.replace(" ", "T")).toLocaleDateString(i18n.language, {
                           year: "numeric",
                           month: "long",
                           day: "numeric",

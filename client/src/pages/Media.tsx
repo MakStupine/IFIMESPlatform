@@ -34,7 +34,7 @@ export default function MediaPage() {
   useEffect(() => {
     async function fetchVideos() {
       try {
-        const res = await fetch("/api/youtube/latest");
+        const res = await fetch(`${import.meta.env.VITE_ADMIN_API_URL || ""}/api/youtube/latest`);
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setVideos(data.videos.slice(0, 4));
