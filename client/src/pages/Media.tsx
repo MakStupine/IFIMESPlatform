@@ -21,6 +21,13 @@ interface YouTubeVideo {
   title: string;
 }
 
+const FALLBACK_VIDEOS: YouTubeVideo[] = [
+  { id: "_y6wyFaQTC0", title: "New challenges for Albania, region, Europe and the world — Lecture by H.E. Ilir Meta" },
+  { id: "FfsXxQsrozU", title: "THE ESTABLISHMENT OF A NEW WORLD ORDER — Lecture by Blagoje Grahovac" },
+  { id: "Ig7OD6jYs0k", title: "Dr. Mirko Pejanović: The Statehood of Bosnia and Herzegovina in the 20th and 21st Centuries" },
+  { id: "DW6K0DNkAbs", title: "Ceremonija svečane dodjele priznanja za životno djelo akademiku prof. dr. Mirku Pejanoviću" },
+];
+
 export default function MediaPage() {
   const { t, i18n } = useTranslation();
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
@@ -30,22 +37,17 @@ export default function MediaPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  // Fetch latest 4 videos from YouTube channel via scraping the page
+  // Fetch latest 4 videos from YouTube channel; fall back to known videos if
+  // the scraper returns nothing (or errors) so a video always shows.
   useEffect(() => {
     async function fetchVideos() {
       try {
         const res = await fetch(`${import.meta.env.VITE_ADMIN_API_URL || ""}/api/youtube/latest`);
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        setVideos(data.videos.slice(0, 4));
+        setVideos(data.videos?.length ? data.videos.slice(0, 4) : FALLBACK_VIDEOS);
       } catch {
-        // Fallback to known videos if API fails
-        setVideos([
-          { id: "_y6wyFaQTC0", title: "New challenges for Albania, region, Europe and the world — Lecture by H.E. Ilir Meta" },
-          { id: "FfsXxQsrozU", title: "THE ESTABLISHMENT OF A NEW WORLD ORDER — Lecture by Blagoje Grahovac" },
-          { id: "Ig7OD6jYs0k", title: "Dr. Mirko Pejanović: The Statehood of Bosnia and Herzegovina in the 20th and 21st Centuries" },
-          { id: "DW6K0DNkAbs", title: "Ceremonija svečane dodjele priznanja za životno djelo akademiku prof. dr. Mirku Pejanoviću" },
-        ]);
+        setVideos(FALLBACK_VIDEOS);
       } finally {
         setLoadingVideos(false);
       }
@@ -138,7 +140,21 @@ export default function MediaPage() {
               </div>
             ) : (
               <>
-                {/* Featured Video (latest) */}
+                {/* YouTube Channel Link */}
+                <div className="text-center mb-12">
+                  <a
+                    href="https://www.youtube.com/@Ifimes"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  >
+                    <Youtube className="h-5 w-5" />
+                    Visit Our YouTube Channel
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </div>
+
+                {/* Featured Video (latest) — below the channel button */}
                 {featuredVideo && (
                   <div className="max-w-4xl mx-auto mb-12">
                     <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl">
@@ -189,19 +205,6 @@ export default function MediaPage() {
                   ))}
                 </div>
 
-                {/* YouTube Channel Link */}
-                <div className="text-center mt-8">
-                  <a
-                    href="https://www.youtube.com/@Ifimes"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                  >
-                    <Youtube className="h-5 w-5" />
-                    Visit Our YouTube Channel
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </div>
               </>
             )}
           </div>
