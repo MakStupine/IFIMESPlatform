@@ -46,6 +46,16 @@ const formatDate = (dateStr: string) => {
 // Native language names for the "available in" links.
 const LANG_NAMES: Record<string, string> = { en: "English", bs: "Bosanski", sl: "Slovenščina" };
 
+// Title in the requested language, falling back to any language that has one
+// (used in lists/sidebars so a card never renders a blank title).
+const pickTitle = (item: any, lang: string): string => {
+  for (const l of [lang, "en", "bs", "sl"]) {
+    const tt = item?.[`title_${l}`];
+    if (tt && String(tt).trim()) return tt;
+  }
+  return "";
+};
+
 // True only if a language version has real article text (not empty, not the
 // leftover scraped nav/footer junk from the old import).
 const hasContent = (c?: string | null): boolean => {
@@ -379,7 +389,7 @@ export default function TitleDescNewsletter() {
                 </h2>
                 <motion.ul className="space-y-4" variants={stagger} initial="hidden" animate="visible">
                   {section.data.map((item) => {
-                    const { title } = getLocalized(item);
+                    const title = pickTitle(item, i18n.language);
                     return (
                       <motion.li
                         key={item.id}

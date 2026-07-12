@@ -112,13 +112,15 @@ export default function PressPage() {
   }, [location, currentPage]);
 
   const getLocalized = (item: Article) => {
+    const pick = (a?: string, b?: string, c?: string) =>
+      (a && a.trim()) || (b && b.trim()) || (c && c.trim()) || "";
     switch (i18n.language) {
       case "bs":
-        return { title: item.title_bs, content: item.content_bs };
+        return { title: pick(item.title_bs, item.title_en, item.title_sl), content: pick(item.content_bs, item.content_en, item.content_sl) };
       case "sl":
-        return { title: item.title_sl, content: item.content_sl };
+        return { title: pick(item.title_sl, item.title_en, item.title_bs), content: pick(item.content_sl, item.content_en, item.content_bs) };
       default:
-        return { title: item.title_en, content: item.content_en };
+        return { title: pick(item.title_en, item.title_bs, item.title_sl), content: pick(item.content_en, item.content_bs, item.content_sl) };
     }
   };
 
