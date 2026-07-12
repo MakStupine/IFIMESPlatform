@@ -64,7 +64,8 @@ const hasContent = (c?: string | null): boolean => {
   if (!t) return false;
   if (/^EN\s+SLO\s+BIH/i.test(t)) return false;
   if (/Livestream/i.test(t) && /(Institut O nama|Institute Organisation|Inštitut O nas)/i.test(t)) return false;
-  return t.replace(/<[^>]*>/g, "").trim().length >= 20;
+  // Show any real text; only hide truly empty (or entity-only) content.
+  return t.replace(/<[^>]*>/g, "").replace(/&[a-z]+;/gi, "").trim().length >= 1;
 };
 
 const stagger = {
