@@ -365,6 +365,12 @@
     "error": "Pretplata nije uspjela. Molimo pokušajte ponovo."
   },
 
+  "articleDetail": {
+    "noTranslationTitle": "Prijevod nije dostupan",
+    "noTranslationBody": "Ovaj članak još nije preveden na ovaj jezik.",
+    "availableIn": "Dostupno na:"
+  },
+
   "latestContent": {
     "title": "Najnovije vijesti i istraživanja",
     "subtitle": "Budite u toku sa našim najnovijim publikacijama, saopštenjima i analizama",

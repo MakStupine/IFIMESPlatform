@@ -43,6 +43,20 @@ const formatDate = (dateStr: string) => {
   return `${String(d.getDate()).padStart(2, "0")}.${String(d.getMonth() + 1).padStart(2, "0")}.${d.getFullYear()}`;
 };
 
+// Native language names for the "available in" links.
+const LANG_NAMES: Record<string, string> = { en: "English", bs: "Bosanski", sl: "Slovenščina" };
+
+// True only if a language version has real article text (not empty, not the
+// leftover scraped nav/footer junk from the old import).
+const hasContent = (c?: string | null): boolean => {
+  if (!c) return false;
+  const t = c.trim();
+  if (!t) return false;
+  if (/^EN\s+SLO\s+BIH/i.test(t)) return false;
+  if (/Livestream/i.test(t) && /(Institut O nama|Institute Organisation|Inštitut O nas)/i.test(t)) return false;
+  return t.replace(/<[^>]*>/g, "").trim().length >= 20;
+};
+
 const stagger = {
   hidden: {},
   visible: {
@@ -174,12 +188,26 @@ export default function TitleDescNewsletter() {
   }
 
   const { title, content } = getLocalized(article);
+  const contentAvailable = hasContent(content);
+  // Languages that actually have this article (excluding the current one).
+  const otherLangs = (["en", "bs", "sl"] as const).filter(
+    (l) => l !== i18n.language && hasContent((article as any)[`content_${l}`])
+  );
+  // The current-language title may be empty too — fall back for the heading.
+  const fallbackTitle =
+    title ||
+    (article as any)[`title_${otherLangs[0]}`] ||
+    article.title_en ||
+    article.title_bs ||
+    article.title_sl ||
+    "";
+  const displayTitle = contentAvailable ? title : fallbackTitle;
   const totalShares = Object.values(shareCounts).reduce(
     (acc, val) => acc + val,
     0
   );
   const currentUrl = encodeURIComponent(window.location.href);
-  const encodedTitle = encodeURIComponent(title);
+  const encodedTitle = encodeURIComponent(displayTitle || "");
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -268,11 +296,11 @@ export default function TitleDescNewsletter() {
             variants={fadeIn}
           >
             <h1 className="text-4xl font-bold text-gray-900 text-center mb-6">
-              {title}
+              {displayTitle}
             </h1>
             <motion.img
               src={getImageUrl(article.featuredImage)}
-              alt={title}
+              alt={displayTitle}
               className="w-full h-[400px] object-cover rounded-lg shadow-md mb-10"
               onError={(e) => {
                 e.currentTarget.src = ARTICLE_PLACEHOLDER;
@@ -281,11 +309,46 @@ export default function TitleDescNewsletter() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
             />
-            <motion.article
-              className="text-gray-700 text-lg leading-relaxed space-y-6 prose prose-lg max-w-none"
-              variants={fadeIn}
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
+            {contentAvailable ? (
+              <motion.article
+                className="text-gray-700 text-lg leading-relaxed space-y-6 prose prose-lg max-w-none"
+                variants={fadeIn}
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            ) : (
+              <motion.div
+                variants={fadeIn}
+                className="flex flex-col items-center text-center py-16 px-6 bg-gray-50 rounded-xl border border-gray-100"
+              >
+                <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-5 text-2xl">
+                  🌐
+                </div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                  {t("articleDetail.noTranslationTitle")}
+                </h2>
+                <p className="text-gray-500 max-w-md mb-6">
+                  {t("articleDetail.noTranslationBody")}
+                </p>
+                {otherLangs.length > 0 && (
+                  <div className="flex flex-col items-center gap-3">
+                    <span className="text-sm font-medium text-gray-600">
+                      {t("articleDetail.availableIn")}
+                    </span>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {otherLangs.map((l) => (
+                        <button
+                          key={l}
+                          onClick={() => i18n.changeLanguage(l)}
+                          className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+                        >
+                          {LANG_NAMES[l]}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </motion.div>
+            )}
           </motion.div>
 
           <motion.div

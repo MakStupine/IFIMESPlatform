@@ -365,6 +365,12 @@
     "error": "Naročnina ni uspela. Poskusite znova."
   },
 
+  "articleDetail": {
+    "noTranslationTitle": "Prevod ni na voljo",
+    "noTranslationBody": "Ta članek še ni preveden v ta jezik.",
+    "availableIn": "Na voljo v:"
+  },
+
   "latestContent": {
     "title": "Zadnje novice in raziskave",
     "subtitle": "Ostanite na tekočem z našimi najnovejšimi publikacijami, sporočili za javnost in analizami",

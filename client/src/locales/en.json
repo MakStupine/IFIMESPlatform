@@ -381,6 +381,12 @@
     "error": "Subscription failed. Please try again."
   },
 
+  "articleDetail": {
+    "noTranslationTitle": "Translation not available",
+    "noTranslationBody": "This article hasn't been translated into this language yet.",
+    "availableIn": "Available in:"
+  },
+
   "latestContent": {
     "title": "Latest News & Research",
     "subtitle": "Stay updated with our most recent publications, press releases, and analyses",
